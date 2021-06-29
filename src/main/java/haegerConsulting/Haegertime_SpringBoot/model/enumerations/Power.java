@@ -1,4 +1,6 @@
 package haegerConsulting.Haegertime_SpringBoot.model.enumerations;
 
-public class Power {
+public enum Power {
+
+    Employee, Bookkeeper, Administrator
 }
