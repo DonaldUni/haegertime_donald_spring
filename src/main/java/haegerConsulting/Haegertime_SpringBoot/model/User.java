@@ -1,5 +1,6 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
+import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
 
@@ -9,37 +10,28 @@ public class User extends Person{
     private String userName;
     private String password;
     private String email;
-    private Power power = Power.Employee;
-    private Status status = Status.actived;
+    private Power power;
+    private Status status;
 
-    private float numberOfUsedHoliday = 0;
-    private float numberOfRestHoliday = 0;
-    private float numberOfSickDay = 0 ;
-    private final int NUMBEROFHOLIDAY = 30;
+    private float numberOfUsedHoliday;
+    private float numberOfRestHoliday;
+    private float numberOfSickDay;
+    private final int NUMBEROFHOLIDAY;
 
     //Constructor
-    public User(String lastname, String firstname, String userName, String password, String email) {
-        super(lastname, firstname);
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
+    public User(UserBuilder builder){
+        super(builder.personId, builder.lastname, builder.firstname);
+        employeeNummer = builder.employeeNummer;
+        userName = builder.userName;
+        password = builder.password;
+        email = builder.email;
+        power = builder.power;
+        status = builder.status;
+        numberOfUsedHoliday = builder.numberOfUsedHoliday;
+        numberOfRestHoliday = builder.numberOfRestHoliday;
+        NUMBEROFHOLIDAY = builder.NUMBEROFHOLIDAY;
     }
 
-    public User(long id, String lastname, String firstname, long employeeNummer, String userName, String password,
-                String email, Power power, Status status, float numberOfUsedHoliday, float numberOfRestHoliday,
-                float numberOfSickDay) {
-
-        super(id, lastname, firstname);
-        this.employeeNummer = employeeNummer;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.power = power;
-        this.status = status;
-        this.numberOfUsedHoliday = numberOfUsedHoliday;
-        this.numberOfRestHoliday = numberOfRestHoliday;
-        this.numberOfSickDay = numberOfSickDay;
-    }
 
     //getter and setter
     public long getEmployeeNummer() {

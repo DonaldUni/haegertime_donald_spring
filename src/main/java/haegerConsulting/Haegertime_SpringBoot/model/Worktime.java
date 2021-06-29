@@ -1,5 +1,7 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
+import haegerConsulting.Haegertime_SpringBoot.model.builder.WorktimeBuilder;
+
 public class Worktime {
 
     private long id;
@@ -12,27 +14,18 @@ public class Worktime {
     private String period;
 
     //Constructor
+    public Worktime(WorktimeBuilder builder){
 
-    public Worktime(long projectId, String projectName, long employeeNummer, float workhour, float overtime, float undertime, String period) {
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.employeeNummer = employeeNummer;
-        this.workhour = workhour;
-        this.overtime = overtime;
-        this.undertime = undertime;
-        this.period = period;
+        id = builder.id;
+        projectId = builder.projectId;
+        projectName = builder.projectName;
+        employeeNummer = builder.employeeNummer;
+        workhour = builder.workhour;
+        overtime = builder.overtime;
+        undertime = builder.undertime;
+        period = builder.period;
     }
 
-    public Worktime(long id, long projectId, String projectName, long employeeNummer, float workhour, float overtime, float undertime, String period) {
-        this.id = id;
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.employeeNummer = employeeNummer;
-        this.workhour = workhour;
-        this.overtime = overtime;
-        this.undertime = undertime;
-        this.period = period;
-    }
 
     //getter and setter
     public long getId() {
