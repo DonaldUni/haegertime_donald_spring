@@ -3,21 +3,45 @@ package haegerConsulting.Haegertime_SpringBoot.model;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.RequestStatus;
 
 
+import javax.persistence.*;
 import java.time.Instant;
 
+@Entity
+@Table(name = "RequestOfHoliday")
+@SequenceGenerator(name = "generator", initialValue = 1)
 public class RequestOfHoliday {
 
-    private long requestId;
-    private long employeeNummer;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @Column(unique = true, nullable = false)
+    private long id;
+
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_employeeNummer",
+            nullable = false
+    )
+    private User user;
+
+    @Column(nullable = false)
     private int numberOfRequestedDay;
+
+    @Column(nullable = false)
     private Instant startDate;
+
+    @Column(nullable = false)
     private Instant finishDate;
-    private RequestStatus status = RequestStatus.Pending ;
+
+    @Column(nullable = false)
+    private RequestStatus status = RequestStatus.Pending;
+
+    @Column(nullable = false)
     private Instant time;
 
     //Constructor
-    public RequestOfHoliday(long employeeNummer, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status) {
-        this.employeeNummer = employeeNummer;
+    public RequestOfHoliday(User user, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status) {
+        this.user = user;
         this.numberOfRequestedDay = numberOfRequestedDay;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -25,9 +49,9 @@ public class RequestOfHoliday {
         this.time = Instant.now();
     }
 
-    public RequestOfHoliday(long requestId, long employeeNummer, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status, Instant time) {
-        this.requestId = requestId;
-        this.employeeNummer = employeeNummer;
+    public RequestOfHoliday(long id, User user, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status, Instant time) {
+        this.id = id;
+        this.user = user;
         this.numberOfRequestedDay = numberOfRequestedDay;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -37,20 +61,20 @@ public class RequestOfHoliday {
 
     //getter and setter
 
-    public long getRequestId() {
-        return requestId;
+    public long getId() {
+        return id;
     }
 
-    public void setRequestId(long requestId) {
-        this.requestId = requestId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getEmployeeNummer() {
-        return employeeNummer;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmployeeNummer(long employeeNummer) {
-        this.employeeNummer = employeeNummer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getNumberOfRequestedDay() {
@@ -97,8 +121,8 @@ public class RequestOfHoliday {
     @Override
     public String toString() {
         return "RequestOfHoliday{" +
-                "requestId = " + requestId +
-                ", employeeNummer = " + employeeNummer +
+                "requestId = " + id +
+                ", user = " + user.toString() +
                 ", numberOfRequestedDay = " + numberOfRequestedDay +
                 ", startDate = " + startDate +
                 ", finishDate = " + finishDate +

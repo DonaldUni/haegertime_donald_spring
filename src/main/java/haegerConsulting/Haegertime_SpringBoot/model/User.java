@@ -3,19 +3,49 @@ package haegerConsulting.Haegertime_SpringBoot.model;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Columns;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "User")
+@SequenceGenerator(name = "generator", initialValue = 1)
 public class User extends Person{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @Column(nullable = false, unique = true)
     private long employeeNummer;
+
+    @Column(nullable = false, unique = true)
     private String userName;
+
+    @Size(min = 5, message = "Password should have minimum 5 characters")
+    @Size(max = 10, message = "Password should have maximum 10 characters")
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private Power power;
+
+    @Column(nullable = false)
     private Status status;
 
+    @Column(nullable = false)
     private float numberOfUsedHoliday;
+
+    @Column(nullable = false)
     private float numberOfRestHoliday;
+
+    @Column(nullable = false)
     private float numberOfSickDay;
+
+    @Column(nullable = false)
     private final int NUMBEROFHOLIDAY;
 
     //Constructor

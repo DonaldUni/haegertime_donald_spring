@@ -1,12 +1,30 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "Project")
+@SequenceGenerator(name = "generator", initialValue = 1)
 public class Project {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    //@JoinColumn(name = "project_name", referencedColumnName = "name")   // zu testen
     private ArrayList<User> users;
 
 

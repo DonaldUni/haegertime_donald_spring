@@ -1,25 +1,52 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
-import haegerConsulting.Haegertime_SpringBoot.model.builder.WorktimeBuilder;
+import haegerConsulting.Haegertime_SpringBoot.model.builder.FinalWorktimeBuilder;
 
-public class Worktime {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "FinalWorktime")
+@SequenceGenerator(name = "generator", initialValue = 1)
+public class FinalWorktime {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private long id;
-    private long projectId;
-    private String projectName;
-    private long employeeNummer;
+
+    @ManyToOne
+    @JoinColumns(
+            {
+            @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
+            @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
+            }
+    )
+    private Project project;
+
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "user_employeeNummer"
+    )
+    private User user;
+
+    @Column(nullable = false)
     private float workhour;
+
+    @Column(nullable = false)
     private float overtime;
+
+    @Column(nullable = false)
     private float undertime;
+
+    @Column(nullable = false)
     private String period;
 
     //Constructor
-    public Worktime(WorktimeBuilder builder){
+    public FinalWorktime(FinalWorktimeBuilder builder){
 
         id = builder.id;
-        projectId = builder.projectId;
-        projectName = builder.projectName;
-        employeeNummer = builder.employeeNummer;
+        project = builder.project;
+        user = builder.user;
         workhour = builder.workhour;
         overtime = builder.overtime;
         undertime = builder.undertime;
@@ -36,28 +63,21 @@ public class Worktime {
         this.id = id;
     }
 
-    public long getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public String getProjectName() {
-        return projectName;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public long getEmployeeNummer() {
-        return employeeNummer;
-    }
-
-    public void setEmployeeNummer(long employeeNummer) {
-        this.employeeNummer = employeeNummer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public float getWorkhour() {
@@ -96,9 +116,8 @@ public class Worktime {
     public String toString() {
         return "Worktime{" +
                 "id = " + id +
-                ", projectId = " + projectId +
-                ", projectName = '" + projectName + '\'' +
-                ", employeeNummer = " + employeeNummer +
+                ", project = " + project.toString() +
+                ", user = " + user.toString() +
                 ", workhour = " + workhour +
                 ", overtime = " + overtime +
                 ", undertime = " + undertime +
