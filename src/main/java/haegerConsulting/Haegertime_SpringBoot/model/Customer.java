@@ -9,9 +9,9 @@ import java.util.List;
 @SequenceGenerator(name = "generator", initialValue = 1)
 public class Customer extends Person{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    private long id;
+    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "generator")
+    private long customer_id;
 
     @Column(nullable = false)
     private String enterpriseName;
@@ -34,21 +34,21 @@ public class Customer extends Person{
         this.projects = project;
     }
 
-    public Customer(long id, String lastname, String firstname, long clientId, String enterpriseName, List<Project> project) {
-        super(id, lastname, firstname);
-        this.id = clientId;
+    public Customer(long person_id, String lastname, String firstname, long customer_id, String enterpriseName, List<Project> project) {
+        super(person_id, lastname, firstname);
+        this.customer_id = customer_id;
         this.enterpriseName = enterpriseName;
         this.projects = project;
     }
 
 
     //getter und setter
-    public long getId() {
-        return id;
+    public long getCustomer_id() {
+        return customer_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCustomer_id(long customer_id) {
+        this.customer_id = customer_id;
     }
 
     public String getEnterpriseName() {
@@ -70,7 +70,7 @@ public class Customer extends Person{
     @Override
     public String toString() {
         return "Client{" +
-                "clientId = " + id +
+                "clientId = " + customer_id +
                 ", enterpriseName = '" + enterpriseName + '\'' +
                 ", projects = " + projects +
                 '}';

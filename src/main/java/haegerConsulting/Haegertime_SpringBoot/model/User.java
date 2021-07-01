@@ -14,10 +14,11 @@ import javax.validation.constraints.Size;
 @SequenceGenerator(name = "generator", initialValue = 1)
 public class User extends Person{
 
-    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     @Column(nullable = false, unique = true)
     private long employeeNummer;
+
+
 
     @Column(nullable = false, unique = true)
     private String userName;

@@ -2,6 +2,7 @@ package haegerConsulting.Haegertime_SpringBoot.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Project")
@@ -23,9 +24,13 @@ public class Project {
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
-    //@JoinColumn(name = "project_name", referencedColumnName = "name")   // zu testen
-    private ArrayList<User> users;
+    @JoinColumns(
+            {
+                    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
+                    @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
+            }
+    )
+    private List<User> users = new ArrayList<>();
 
 
     //Constructor
@@ -73,7 +78,7 @@ public class Project {
         this.description = description;
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 

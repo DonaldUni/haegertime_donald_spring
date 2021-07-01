@@ -1,8 +1,16 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "person_id")
     private long id;
+
     private String lastname;
     private String firstname;
 
@@ -23,10 +31,10 @@ public abstract class Person {
 
 
     //getter and setter
-    public long getId() { return id; }
+    public long getCustomer_id() { return id; }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCustomer_id(long customer_id) {
+        this.id = customer_id;
     }
 
     public String getLastname() {
