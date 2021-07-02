@@ -1,5 +1,7 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
+import org.hibernate.annotations.Columns;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "Customer")
 @SequenceGenerator(name = "generator", initialValue = 1)
+
 public class Customer extends Person{
 
     @Column(unique = true, nullable = false)

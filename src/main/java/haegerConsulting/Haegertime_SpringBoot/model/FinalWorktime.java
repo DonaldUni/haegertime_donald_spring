@@ -23,7 +23,7 @@ public class FinalWorktime {
     private Project project;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "user_employeeNummer")
+    @JoinColumn(nullable = false, name = "userId")
     private User user;
 
     @Column(nullable = false)
