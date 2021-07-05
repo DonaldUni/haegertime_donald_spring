@@ -8,13 +8,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "Customer")
-@SequenceGenerator(name = "generator", initialValue = 1)
-
+//@SequenceGenerator(name = "generator", initialValue = 1)
 public class Customer extends Person{
 
+    //@GeneratedValue(strategy = GenerationType.TABLE, generator = "generator")
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "generator")
-    private long customer_id;
+    private Long customer_id;
 
     @Column(nullable = false)
     private String enterpriseName;
@@ -37,7 +36,7 @@ public class Customer extends Person{
         this.projects = project;
     }
 
-    public Customer(long person_id, String lastname, String firstname, long customer_id, String enterpriseName, List<Project> project) {
+    public Customer(Long person_id, String lastname, String firstname, long customer_id, String enterpriseName, List<Project> project) {
         super(person_id, lastname, firstname);
         this.customer_id = customer_id;
         this.enterpriseName = enterpriseName;
@@ -46,11 +45,11 @@ public class Customer extends Person{
 
 
     //getter und setter
-    public long getCustomer_id() {
+    public Long getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(long customer_id) {
+    public void setCustomer_id(Long customer_id) {
         this.customer_id = customer_id;
     }
 

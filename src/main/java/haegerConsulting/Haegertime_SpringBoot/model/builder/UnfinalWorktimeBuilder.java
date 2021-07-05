@@ -7,7 +7,7 @@ import haegerConsulting.Haegertime_SpringBoot.model.User;
 
 public class UnfinalWorktimeBuilder {
 
-    public long id;
+    public Long id;
     public Project project;
     public User user;
     public float workhour;
@@ -35,7 +35,7 @@ public class UnfinalWorktimeBuilder {
     }
 
 
-    public UnfinalWorktimeBuilder id(long id) {
+    public UnfinalWorktimeBuilder id(Long id) {
         this.id = id;
         return this;
     }

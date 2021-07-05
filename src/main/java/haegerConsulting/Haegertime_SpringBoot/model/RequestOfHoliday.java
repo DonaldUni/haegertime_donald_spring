@@ -14,7 +14,7 @@ public class RequestOfHoliday {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     @Column(unique = true, nullable = false)
-    private long id;
+    private Long id;
 
 
     @ManyToOne
@@ -49,7 +49,7 @@ public class RequestOfHoliday {
         this.time = Instant.now();
     }
 
-    public RequestOfHoliday(long id, User user, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status, Instant time) {
+    public RequestOfHoliday(Long id, User user, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status, Instant time) {
         this.id = id;
         this.user = user;
         this.numberOfRequestedDay = numberOfRequestedDay;
@@ -61,11 +61,11 @@ public class RequestOfHoliday {
 
     //getter and setter
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

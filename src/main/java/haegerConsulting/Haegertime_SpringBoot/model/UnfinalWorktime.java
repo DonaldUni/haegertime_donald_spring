@@ -11,7 +11,7 @@ public class UnfinalWorktime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumns(
@@ -55,11 +55,11 @@ public class UnfinalWorktime {
 
 
     //getter and setter
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    private long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -45,7 +45,7 @@ public class Project {
         this.users = users;
     }
 
-    public Project(long id, String name, String description, ArrayList<User> users) {
+    public Project(Long id, String name, String description, ArrayList<User> users) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,11 +54,11 @@ public class Project {
 
 
     //getter and setter
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FinalWorktimeBuilder {
 
-    public long id;
+    public Long id;
     public Project project;
     public User user;
     public float workhour;
@@ -36,7 +36,7 @@ public class FinalWorktimeBuilder {
     }
 
 
-    public FinalWorktimeBuilder id(long id) {
+    public FinalWorktimeBuilder id(Long id) {
         this.id = id;
         return this;
     }

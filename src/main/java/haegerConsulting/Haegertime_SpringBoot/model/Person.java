@@ -7,9 +7,9 @@ import javax.persistence.*;
 public abstract class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "person_id")
-    private long id;
+    private Long id;
 
     private String lastname;
     private String firstname;
@@ -31,10 +31,10 @@ public abstract class Person {
 
 
     //getter and setter
-    public long getCustomer_id() { return id; }
+    public Long getId() { return id; }
 
-    public void setCustomer_id(long customer_id) {
-        this.id = customer_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLastname() {
