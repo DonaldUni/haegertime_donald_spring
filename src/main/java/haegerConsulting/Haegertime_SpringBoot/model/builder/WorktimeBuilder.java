@@ -1,11 +1,11 @@
 package haegerConsulting.Haegertime_SpringBoot.model.builder;
 
-import haegerConsulting.Haegertime_SpringBoot.model.FinalWorktime;
 import haegerConsulting.Haegertime_SpringBoot.model.Project;
-import haegerConsulting.Haegertime_SpringBoot.model.UnfinalWorktime;
+import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
+import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
 
-public class UnfinalWorktimeBuilder {
+public class WorktimeBuilder {
 
     public Long id;
     public Project project;
@@ -14,9 +14,10 @@ public class UnfinalWorktimeBuilder {
     public float overtime;
     public float undertime;
     public String period;
+    public WorktimeType worktimeType = WorktimeType.Unfinal;
 
     //Constructor
-    public UnfinalWorktime build(){
+    public Worktime build(){
 
         if (project == null){
             throw new IllegalStateException(" project is null!");
@@ -31,42 +32,47 @@ public class UnfinalWorktimeBuilder {
             throw new IllegalStateException(" period is null!");
         }
 
-        return new UnfinalWorktime(this);
+        return new Worktime(this);
     }
 
 
-    public UnfinalWorktimeBuilder id(Long id) {
+    public WorktimeBuilder id(Long id) {
         this.id = id;
         return this;
     }
 
-    public UnfinalWorktimeBuilder project(Project project) {
+    public WorktimeBuilder project(Project project) {
         this.project = project;
         return this;
     }
 
-    public UnfinalWorktimeBuilder user(User user) {
+    public WorktimeBuilder user(User user) {
         this.user = user;
         return this;
     }
 
-    public UnfinalWorktimeBuilder workhour(float workhour) {
+    public WorktimeBuilder workhour(float workhour) {
         this.workhour = workhour;
         return this;
     }
 
-    public UnfinalWorktimeBuilder overtime(float overtime) {
+    public WorktimeBuilder overtime(float overtime) {
         this.overtime = overtime;
         return this;
     }
 
-    public UnfinalWorktimeBuilder undertime(float undertime) {
+    public WorktimeBuilder undertime(float undertime) {
         this.undertime = undertime;
         return this;
     }
 
-    public UnfinalWorktimeBuilder period(String period) {
+    public WorktimeBuilder period(String period) {
         this.period = period;
+        return this;
+    }
+
+    public WorktimeBuilder type(WorktimeType type) {
+        this.worktimeType = type;
         return this;
     }
 }

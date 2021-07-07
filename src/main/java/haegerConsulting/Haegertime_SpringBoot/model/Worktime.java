@@ -1,13 +1,14 @@
 package haegerConsulting.Haegertime_SpringBoot.model;
 
-import haegerConsulting.Haegertime_SpringBoot.model.builder.FinalWorktimeBuilder;
+import haegerConsulting.Haegertime_SpringBoot.model.builder.WorktimeBuilder;
+import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "FinalWorktime")
+@Table(name = "Worktime")
 @SequenceGenerator(name = "generator", initialValue = 1)
-public class FinalWorktime {
+public class Worktime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -16,14 +17,14 @@ public class FinalWorktime {
     @ManyToOne
     @JoinColumns(
             {
-            @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
-            @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
+                    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
+                    @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
             }
     )
     private Project project;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "userId")
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
     @Column(nullable = false)
@@ -38,8 +39,11 @@ public class FinalWorktime {
     @Column(nullable = false)
     private String period;
 
+    @Column(nullable = false)
+    private WorktimeType worktimeType;
+
     //Constructor
-    public FinalWorktime(FinalWorktimeBuilder builder){
+    public Worktime(WorktimeBuilder builder){
 
         id = builder.id;
         project = builder.project;
@@ -48,6 +52,7 @@ public class FinalWorktime {
         overtime = builder.overtime;
         undertime = builder.undertime;
         period = builder.period;
+        worktimeType = builder.worktimeType;
     }
 
 
@@ -67,7 +72,6 @@ public class FinalWorktime {
     public void setProject(Project project) {
         this.project = project;
     }
-
 
     public User getUser() {
         return user;
@@ -109,16 +113,25 @@ public class FinalWorktime {
         this.period = period;
     }
 
+    public WorktimeType getWorktimeType() {
+        return worktimeType;
+    }
+
+    public void setWorktimeType(WorktimeType worktimeType) {
+        this.worktimeType = worktimeType;
+    }
+
     @Override
     public String toString() {
         return "Worktime{" +
-                "id = " + id +
-                ", project = " + project.toString() +
-                ", user = " + user.toString() +
-                ", workhour = " + workhour +
-                ", overtime = " + overtime +
-                ", undertime = " + undertime +
-                ", period = '" + period + '\'' +
+                "id=" + id +
+                ", project=" + project.toString() +
+                ", user=" + user.toString() +
+                ", workhour=" + workhour +
+                ", overtime=" + overtime +
+                ", undertime=" + undertime +
+                ", period='" + period + '\'' +
+                ", worktimeType=" + worktimeType +
                 '}';
     }
 }
