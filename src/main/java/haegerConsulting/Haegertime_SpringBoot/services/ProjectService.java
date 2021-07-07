@@ -40,7 +40,7 @@ public class ProjectService {
         }
     }
 
-    public Iterable<Project> getProjectByUserId(Long user_id) throws ProjectNotFoundException{
+    public Iterable<Project> getProjectsByUserId(Long user_id) throws ProjectNotFoundException{
 
         Iterable<Project> projects = projectRepository.findAllByUserId(user_id);
 

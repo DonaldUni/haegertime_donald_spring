@@ -2,7 +2,10 @@ package haegerConsulting.Haegertime_SpringBoot.services;
 
 import haegerConsulting.Haegertime_SpringBoot.exceptions.Customer.CustomerNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.Customer.DuplicateCustomerException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeExceptions.WorktimeNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.model.Customer;
+import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
+import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
 import haegerConsulting.Haegertime_SpringBoot.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +43,18 @@ public class CustomerService {
         }
     }
 
-    //public Customer getCustomer(Long customer_id)
+    public Customer getCustomer(Long id) throws CustomerNotFoundException{
+
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        if (customer.isEmpty()){
+
+            throw new CustomerNotFoundException();
+        }
+
+        return customer.get();
+    }
+
     public List<Customer> getAllCustomers(){
 
         return customerRepository.findAll();

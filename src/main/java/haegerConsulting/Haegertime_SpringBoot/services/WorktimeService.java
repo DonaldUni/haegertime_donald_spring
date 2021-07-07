@@ -78,6 +78,19 @@ public class WorktimeService {
         }
     }
 
+    public Iterable<Worktime> getAllMyWorktime(Long id) throws WorktimeNotFoundException{
+
+        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserId(id);
+
+        if (finalWorktime !=null){
+
+            throw new WorktimeNotFoundException();
+        }else{
+
+            return finalWorktime;
+        }
+    }
+
     public Iterable<Worktime> getAllUnfinalWorktime(){
 
         return worktimeRepository.findAllByWorktimeType(WorktimeType.Unfinal);
@@ -88,9 +101,9 @@ public class WorktimeService {
         return worktimeRepository.findAllByWorktimeType(WorktimeType.Final);
     }
 
-    public void updateUnfinalWorktime(Long id, Worktime newWorktime) throws WorktimeNotFoundException{
+    public void updateUnfinalWorktime(Worktime newWorktime) throws WorktimeNotFoundException{
 
-        Optional<Worktime> optional_unfinalWorktime = worktimeRepository.findById(id);
+        Optional<Worktime> optional_unfinalWorktime = worktimeRepository.findById(newWorktime.getId());
 
         if (optional_unfinalWorktime.isPresent()){
 

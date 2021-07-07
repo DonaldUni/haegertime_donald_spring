@@ -40,7 +40,7 @@ public class RequestOfHolidaysService {
         }
     }
 
-    public Iterable<RequestOfHoliday> getRequestOfHolidayByUserId(Long user_id) throws RequestOfHolidayNotFoundException{
+    public Iterable<RequestOfHoliday> getRequestOfHolidaysByUserId(Long user_id) throws RequestOfHolidayNotFoundException{
 
         Iterable<RequestOfHoliday> requestOfHolidays = requestOfHolidaysRepository.findAllByUserId(user_id);
 
