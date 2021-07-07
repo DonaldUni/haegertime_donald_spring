@@ -1,16 +1,18 @@
 package haegerConsulting.Haegertime_SpringBoot.services;
 
-import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateWorktimeException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeNotFoundException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeExceptions.DuplicateWorktimeException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeExceptions.WorktimeNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.model.FinalWorktime;
 import haegerConsulting.Haegertime_SpringBoot.model.UnfinalWorktime;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.FinalWorktimeBuilder;
 import haegerConsulting.Haegertime_SpringBoot.repository.FinalWorktimeRepository;
 import haegerConsulting.Haegertime_SpringBoot.repository.UnfinalWorktimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UnfinalWorktimeService {
 
     @Autowired
@@ -31,6 +33,17 @@ public class UnfinalWorktimeService {
         return unfinalWorktimeRepository.save(unfinalWorktime);
     }
 
+    public UnfinalWorktime getUnfinalWorktime(Long id) throws WorktimeNotFoundException{
+
+        Optional<UnfinalWorktime> unfinalWorktime = unfinalWorktimeRepository.findById(id);
+
+        if (unfinalWorktime.isEmpty()){
+
+            throw new WorktimeNotFoundException();
+        }
+
+        return unfinalWorktime.get();
+    }
 
     public Iterable<UnfinalWorktime> getAllMyUnfinalWorktime(Long id) throws WorktimeNotFoundException{
 

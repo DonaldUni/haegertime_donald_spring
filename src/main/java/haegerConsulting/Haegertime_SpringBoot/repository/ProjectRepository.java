@@ -1,10 +1,11 @@
 package haegerConsulting.Haegertime_SpringBoot.repository;
 
 import haegerConsulting.Haegertime_SpringBoot.model.FinalWorktime;
+import haegerConsulting.Haegertime_SpringBoot.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProjectRepository extends JpaRepository<FinalWorktime, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    Iterable<FinalWorktime> findAllByUserId(Long userId);
+    Iterable<Project> findAllByUserId(Long userId);
 
 }

@@ -1,4 +1,4 @@
-package haegerConsulting.Haegertime_SpringBoot.exceptions;
+package haegerConsulting.Haegertime_SpringBoot.exceptions.RequestOfHolidaysExceptions;
 
 public class RequestOfHolidayNotFoundException extends Exception{
 

@@ -1,8 +1,8 @@
 package haegerConsulting.Haegertime_SpringBoot.services;
 
-import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateUserException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.UserNotFoundExceptions;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.UserExceptions.DuplicateUserException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.UserExceptions.UserNotFoundExceptions;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.UserExceptions.UsernameEmptyException;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
