@@ -17,7 +17,7 @@ public class UserBuilder {
     public Status status = Status.actived;
 
     public float numberOfUsedHoliday = 0;
-    public float numberOfRestHoliday = 0;
+    public float numberOfRestHoliday = 30;
     public float numberOfSickDay = 0 ;
     public final int NUMBEROFHOLIDAY = 30;
 
