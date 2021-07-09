@@ -6,11 +6,12 @@ import haegerConsulting.Haegertime_SpringBoot.exceptions.UserExceptions.Username
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
+import haegerConsulting.Haegertime_SpringBoot.services.User.UserService;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AdminService extends UserService{
+public class AdminService extends UserService {
 
 
 

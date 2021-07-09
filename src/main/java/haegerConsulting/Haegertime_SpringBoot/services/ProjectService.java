@@ -2,7 +2,10 @@ package haegerConsulting.Haegertime_SpringBoot.services;
 
 import haegerConsulting.Haegertime_SpringBoot.exceptions.ProjectExceptions.DuplicateProjectException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.ProjectExceptions.ProjectNotFoundException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeExceptions.WorktimeNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.model.Project;
+import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
+import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
 import haegerConsulting.Haegertime_SpringBoot.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,18 @@ public class ProjectService {
 
             throw new ProjectNotFoundException();
         }
+    }
+
+    public Project getProject(Long id) throws ProjectNotFoundException {
+
+        Optional<Project> project = projectRepository.findById(id);
+
+        if (project.isEmpty()){
+
+            throw new ProjectNotFoundException();
+        }
+
+        return project.get();
     }
 
     public Iterable<Project> getProjectsByUserId(Long user_id) throws ProjectNotFoundException{

@@ -101,6 +101,11 @@ public class WorktimeService {
         return worktimeRepository.findAllByWorktimeType(WorktimeType.Final);
     }
 
+    public Iterable<Worktime> getAllWorktime(){
+
+        return worktimeRepository.findAll();
+    }
+
     public void updateUnfinalWorktime(Worktime newWorktime) throws WorktimeNotFoundException{
 
         Optional<Worktime> optional_unfinalWorktime = worktimeRepository.findById(newWorktime.getId());
