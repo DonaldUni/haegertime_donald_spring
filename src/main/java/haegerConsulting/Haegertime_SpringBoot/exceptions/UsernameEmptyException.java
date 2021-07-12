@@ -1,4 +1,4 @@
-package haegerConsulting.Haegertime_SpringBoot.exceptions.UserExceptions;
+package haegerConsulting.Haegertime_SpringBoot.exceptions;
 
 public class UsernameEmptyException extends Exception{
 

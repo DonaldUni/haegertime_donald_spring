@@ -12,9 +12,6 @@ public class App {
 
 	}
 
-	public void test(FinalWorktimeRepository userRepository){
 
-		//userRepository.
-	}
 
 }

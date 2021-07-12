@@ -1,11 +1,8 @@
 package haegerConsulting.Haegertime_SpringBoot.services;
 
-import haegerConsulting.Haegertime_SpringBoot.exceptions.Customer.CustomerNotFoundException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.Customer.DuplicateCustomerException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.WorktimeExceptions.WorktimeNotFoundException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.ElementNotFoundException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateException;
 import haegerConsulting.Haegertime_SpringBoot.model.Customer;
-import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
-import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
 import haegerConsulting.Haegertime_SpringBoot.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +17,17 @@ public class CustomerService {
 
 
 
-    public Customer create(Customer customer) throws DuplicateCustomerException {
+    public Customer create(Customer customer) throws DuplicateException {
 
         if (customer.getId() != null && customerRepository.existsById(customer.getId())){
 
-            throw new DuplicateCustomerException();
+            throw new DuplicateException("This element already exist.");
         }
 
         return customerRepository.save(customer);
     }
 
-    public void updateCustomer(Customer newCustomer) throws CustomerNotFoundException {
+    public void updateCustomer(Customer newCustomer) throws ElementNotFoundException {
 
         Optional<Customer> optionalCustomer = customerRepository.findById(newCustomer.getId());
 
@@ -39,17 +36,17 @@ public class CustomerService {
             customerRepository.save(newCustomer);
         }else {
 
-            throw new CustomerNotFoundException();
+            throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
-    public Customer getCustomer(Long id) throws CustomerNotFoundException{
+    public Customer getCustomer(Long id) throws ElementNotFoundException {
 
         Optional<Customer> customer = customerRepository.findById(id);
 
         if (customer.isEmpty()){
 
-            throw new CustomerNotFoundException();
+            throw new ElementNotFoundException("This element has been not found.");
         }
 
         return customer.get();
@@ -60,14 +57,14 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void deleteById(Long id) throws CustomerNotFoundException {
+    public void deleteById(Long id) throws ElementNotFoundException {
 
         if (customerRepository.existsById(id)){
 
             customerRepository.deleteById(id);
         }else {
 
-            throw new CustomerNotFoundException();
+            throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
