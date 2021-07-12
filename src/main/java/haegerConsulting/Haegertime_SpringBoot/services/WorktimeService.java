@@ -30,7 +30,7 @@ public class WorktimeService {
 
     public Worktime getUnfinalWorktime(Long id) throws ElementNotFoundException {
 
-        Optional<Worktime> unfinalWorktime = worktimeRepository.finbByIdAndWorktimeType(id, WorktimeType.Unfinal);
+        Optional<Worktime> unfinalWorktime = worktimeRepository.findByIdAndWorktimeType(id, WorktimeType.Unfinal);
 
         if (unfinalWorktime.isEmpty()){
 
@@ -42,7 +42,7 @@ public class WorktimeService {
 
     public Worktime getFinalWorktime(Long id) throws ElementNotFoundException{
 
-        Optional<Worktime> finalWorktime = worktimeRepository.finbByIdAndWorktimeType(id, WorktimeType.Final);
+        Optional<Worktime> finalWorktime = worktimeRepository.findByIdAndWorktimeType(id, WorktimeType.Final);
 
         if (finalWorktime.isEmpty()){
 
@@ -54,7 +54,7 @@ public class WorktimeService {
 
     public Iterable<Worktime> getAllMyUnfinalWorktime(Long id) throws ElementNotFoundException{
 
-        Iterable<Worktime> unfinalWorktime = worktimeRepository.findAllByUserIdAndWortimeType(id, WorktimeType.Unfinal);
+        Iterable<Worktime> unfinalWorktime = worktimeRepository.findAllByUserIdAndWorktimeType(id, WorktimeType.Unfinal);
 
         if (unfinalWorktime !=null){
 
@@ -67,7 +67,7 @@ public class WorktimeService {
 
     public Iterable<Worktime> getAllMyFinalWorktime(Long id) throws ElementNotFoundException{
 
-        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserIdAndWortimeType(id, WorktimeType.Final);
+        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserIdAndWorktimeType(id, WorktimeType.Final);
 
         if (finalWorktime !=null){
 
@@ -146,12 +146,12 @@ public class WorktimeService {
 
     public void deleteAllUnfinalWorktime() {
 
-        worktimeRepository.deleteAllByWorktime(WorktimeType.Unfinal);
+        worktimeRepository.deleteAllByWorktimeType(WorktimeType.Unfinal);
     }
 
     public void deleteAllFinalWorktime() {
 
-        worktimeRepository.deleteAllByWorktime(WorktimeType.Final);
+        worktimeRepository.deleteAllByWorktimeType(WorktimeType.Final);
     }
 
     public void deleteAll() {

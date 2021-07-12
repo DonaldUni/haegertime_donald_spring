@@ -12,12 +12,13 @@ import haegerConsulting.Haegertime_SpringBoot.services.RequestOfHolidaysService;
 import haegerConsulting.Haegertime_SpringBoot.services.UserService;
 import haegerConsulting.Haegertime_SpringBoot.services.WorktimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class BookkeeperFacade {
 
     @Autowired
@@ -265,10 +266,10 @@ public class BookkeeperFacade {
 
 
     //Methoden über Projekt
-    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
-
-        return projectService.getProjectsByUserId(user_id);
-    }
+//    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
+//
+//        return projectService.getProjectsByUserId(user_id);
+//    }
 
     public Project createProject(Project project) throws DuplicateException {
 

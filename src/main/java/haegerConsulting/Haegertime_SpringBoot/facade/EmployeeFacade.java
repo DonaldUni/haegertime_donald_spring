@@ -8,9 +8,11 @@ import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
 import haegerConsulting.Haegertime_SpringBoot.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
+@Component
 public class EmployeeFacade {
 
     @Autowired
@@ -87,10 +89,10 @@ public class EmployeeFacade {
 
 
     //Methoden über Projects
-    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
-
-        return projectService.getProjectsByUserId(user_id);
-    }
+//    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
+//
+//        return projectService.getProjectsByUserId(user_id);
+//    }
 
 
     //Methoden über RequestOfHolidays

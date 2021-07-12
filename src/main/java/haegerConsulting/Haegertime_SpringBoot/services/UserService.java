@@ -7,10 +7,6 @@ import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
 import haegerConsulting.Haegertime_SpringBoot.repository.UserRepository;
-import haegerConsulting.Haegertime_SpringBoot.services.CustomerService;
-import haegerConsulting.Haegertime_SpringBoot.services.ProjectService;
-import haegerConsulting.Haegertime_SpringBoot.services.RequestOfHolidaysService;
-import haegerConsulting.Haegertime_SpringBoot.services.WorktimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +37,7 @@ public class UserService {
 
     public boolean existsByUsername(String username){
 
-        return userRepository.existsByUsername(username);
+        return userRepository.existsByUserName(username);
     }
 
     public User saveUser(User user){
@@ -75,9 +71,9 @@ public class UserService {
 
     public void deleteByUsername(String username) throws ElementNotFoundException {
 
-        if (userRepository.existsByUsername(username)){
+        if (userRepository.existsByUserName(username)){
 
-            userRepository.deleteByUsername(username);
+            userRepository.deleteByUserName(username);
         }else {
 
             throw new ElementNotFoundException("This element has been not found.");
@@ -164,10 +160,10 @@ public class UserService {
 
 
     //Methoden über Projects
-    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
-
-        return projectService.getProjectsByUserId(user_id);
-    }
+//    public Iterable<Project> getMyProjects(Long user_id) throws ElementNotFoundException {
+//
+//        return projectService.getProjectsByUserId(user_id);
+//    }
 
 
     //Methoden über RequestOfHolidays

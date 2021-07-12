@@ -24,12 +24,10 @@ public class Project {
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumns(
-            {
-                    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
-                    @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
-            }
-    )
+    @JoinTable(name = "User_Project",
+               joinColumns = @JoinColumn(name = "Project_ID"),
+               inverseJoinColumns = @JoinColumn(name = "Person_ID")
+                )
     private List<User> users = new ArrayList<>();
 
 

@@ -52,18 +52,6 @@ public class ProjectService {
         return project.get();
     }
 
-    public Iterable<Project> getProjectsByUserId(Long user_id) throws ElementNotFoundException{
-
-        Iterable<Project> projects = projectRepository.findAllByUserId(user_id);
-
-        if (projects == null){
-
-            throw new ElementNotFoundException("This element has been not found.");
-        }else {
-
-            return projects;
-        }
-    }
 
     public List<Project> getAllProjects(){
 
