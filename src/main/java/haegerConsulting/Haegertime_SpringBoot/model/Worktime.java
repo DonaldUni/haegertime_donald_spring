@@ -14,17 +14,17 @@ public class Worktime {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumns(
             {
-                    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
-                    @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
+                    @JoinColumn(name = "project_id", referencedColumnName = "id"),
+                    @JoinColumn(name = "project_name", referencedColumnName = "name")
             }
     )
     private Project project;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn( name = "user_id")
     private User user;
 
     @Column(nullable = false)
@@ -43,6 +43,8 @@ public class Worktime {
     private WorktimeType worktimeType;
 
     //Constructor
+    public Worktime(){ }
+
     public Worktime(WorktimeBuilder builder){
 
         id = builder.id;

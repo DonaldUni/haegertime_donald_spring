@@ -26,6 +26,12 @@ public class UserBuilder {
         if (userName == null){
             throw new IllegalStateException(" username is null!");
         }
+        if (lastname == null){
+            throw new IllegalStateException(" lastname is null!");
+        }
+        if (firstname == null){
+            throw new IllegalStateException(" firstname is null!");
+        }
         if (password == null){
             throw new IllegalStateException(" password is null!");
         }

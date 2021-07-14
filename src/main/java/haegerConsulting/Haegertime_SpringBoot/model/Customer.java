@@ -21,17 +21,16 @@ public class Customer extends Person{
     @Column(nullable = false)
     @OneToMany(
             mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.PERSIST
     )
     private List<Project> projects = new ArrayList<>();
 
     //Constructor
-    public Customer() {
-    }
+    public Customer() { }
 
-    public Customer(String lastname, String firstname, String enterpriseName, List<Project> project) {
+    public Customer(Long customer_id, String lastname, String firstname, String enterpriseName, List<Project> project) {
         super(lastname, firstname);
+        this.customer_id = customer_id;
         this.enterpriseName = enterpriseName;
         this.projects = project;
     }

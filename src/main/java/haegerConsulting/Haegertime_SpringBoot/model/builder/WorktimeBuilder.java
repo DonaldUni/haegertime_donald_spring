@@ -19,12 +19,12 @@ public class WorktimeBuilder {
     //Constructor
     public Worktime build(){
 
-        if (project == null){
-            throw new IllegalStateException(" project is null!");
-        }
-        if (user == null){
-            throw new IllegalStateException(" user is null!");
-        }
+//        if (project == null){
+//            throw new IllegalStateException(" project is null!");
+//        }
+//        if (user == null){
+//            throw new IllegalStateException(" user is null!");
+//        }
         if (workhour == 0){
             throw new IllegalStateException(" workhour is null!");
         }

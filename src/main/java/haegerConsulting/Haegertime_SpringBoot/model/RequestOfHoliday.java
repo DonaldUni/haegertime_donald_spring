@@ -13,33 +13,47 @@ public class RequestOfHoliday {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @Column(unique = true, nullable = false)
     private Long id;
 
 
     @ManyToOne
     @JoinColumn(
-            name = "user_employeeNummer",
-            nullable = false
+            name = "user_employeeNummer"
     )
     private User user;
 
-    @Column(nullable = false)
+    @Column
     private int numberOfRequestedDay;
 
-    @Column(nullable = false)
+    @Column
     private Instant startDate;
 
-    @Column(nullable = false)
+    @Column
     private Instant finishDate;
 
-    @Column(nullable = false)
+    @Column
     private RequestStatus status = RequestStatus.Pending;
 
-    @Column(nullable = false)
+    @Column
     private Instant time;
 
     //Constructor
+    public RequestOfHoliday(){ }
+
+    public RequestOfHoliday(int numberOfRequestedDay, Instant startDate, Instant finishDate) {
+        this.numberOfRequestedDay = numberOfRequestedDay;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+    }
+
+    public RequestOfHoliday(User user, int numberOfRequestedDay, Instant startDate, Instant finishDate) {
+        this.user = user;
+        this.numberOfRequestedDay = numberOfRequestedDay;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.time = Instant.now();
+    }
+
     public RequestOfHoliday(User user, int numberOfRequestedDay, Instant startDate, Instant finishDate, RequestStatus status) {
         this.user = user;
         this.numberOfRequestedDay = numberOfRequestedDay;

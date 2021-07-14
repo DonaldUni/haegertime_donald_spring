@@ -276,7 +276,7 @@ public class BookkeeperFacade {
         return projectService.create(project);
     }
 
-    public void updateCustomer(Project project) throws ElementNotFoundException {
+    public void updateProject(Project project) throws ElementNotFoundException {
 
         projectService.updateProject(project);
     }

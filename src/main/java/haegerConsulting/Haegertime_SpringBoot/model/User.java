@@ -23,8 +23,8 @@ public class User extends Person{
     @Column(nullable = false, unique = true)
     private String userName;
 
-    @Size(min = 5, message = "Password should have minimum 5 characters")
-    @Size(max = 10, message = "Password should have maximum 10 characters")
+    @Size(min = 2, message = "Password should have minimum 5 characters")
+    @Size(max = 20, message = "Password should have maximum 10 characters")
     @Column(nullable = false)
     private String password;
 
@@ -47,9 +47,11 @@ public class User extends Person{
     private float numberOfSickDay;
 
     @Column(nullable = false)
-    private final int NUMBEROFHOLIDAY;
+    private int NUMBEROFHOLIDAY;
 
     //Constructor
+    public User(){ }
+
     public User(UserBuilder builder){
         super(builder.personId, builder.lastname, builder.firstname);
         employeeNummer = builder.employeeNummer;
@@ -139,5 +141,22 @@ public class User extends Person{
 
     public int getNUMBEROFHOLIDAY() {
         return NUMBEROFHOLIDAY;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "personId=" + getId() +
+                "employeeNummer=" + employeeNummer +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", power=" + power +
+                ", status=" + status +
+                ", numberOfUsedHoliday=" + numberOfUsedHoliday +
+                ", numberOfRestHoliday=" + numberOfRestHoliday +
+                ", numberOfSickDay=" + numberOfSickDay +
+                ", NUMBEROFHOLIDAY=" + NUMBEROFHOLIDAY +
+                '}';
     }
 }

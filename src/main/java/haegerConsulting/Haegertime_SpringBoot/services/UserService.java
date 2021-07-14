@@ -2,21 +2,18 @@ package haegerConsulting.Haegertime_SpringBoot.services;
 
 import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.ElementNotFoundException;
-import haegerConsulting.Haegertime_SpringBoot.model.Project;
-import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
-import haegerConsulting.Haegertime_SpringBoot.model.User;
-import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
+import haegerConsulting.Haegertime_SpringBoot.model.*;
 import haegerConsulting.Haegertime_SpringBoot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
     private WorktimeService worktimeService;
@@ -39,6 +36,25 @@ public class UserService {
 
         return userRepository.existsByUserName(username);
     }
+
+    public User create(User user) throws DuplicateException, UsernameEmptyException {
+
+
+
+        if (user.getId() != null) {
+            if (userRepository.existsById(user.getId())) {
+                throw new DuplicateException("This element already exist.");
+            }
+        }
+
+        if (user.getUserName() == null){
+
+            throw new UsernameEmptyException();
+        }
+
+        return userRepository.save(user);
+    }
+
 
     public User saveUser(User user){
 

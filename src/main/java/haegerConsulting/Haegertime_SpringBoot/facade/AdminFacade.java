@@ -33,7 +33,7 @@ public class AdminFacade {
     @Autowired
     private ProjectService projectService;
 
-    public User create(User user) throws UsernameEmptyException, DuplicateException {
+    public User createUser(User user) throws UsernameEmptyException, DuplicateException {
 
         if (user.getId() != null && userService.existsById(user.getId())){
 
@@ -56,7 +56,7 @@ public class AdminFacade {
 
     }
 
-    public void updateUsername(Long user_id, String newUsername) throws ElementNotFoundException{
+    public void updateUsernameOfUser(Long user_id, String newUsername) throws ElementNotFoundException{
 
         User user = userService.getUser(user_id);
 
@@ -65,7 +65,7 @@ public class AdminFacade {
 
     }
 
-    public void updatePower(Long user_id, Power newPower) throws ElementNotFoundException{
+    public void updatePowerOfUser(Long user_id, Power newPower) throws ElementNotFoundException{
 
         User user = userService.getUser(user_id);
 
@@ -73,7 +73,7 @@ public class AdminFacade {
         userService.saveUser(user);
     }
 
-    public void updateStatus(Long user_id, Status newStatus) throws ElementNotFoundException{
+    public void updateStatusOfUser(Long user_id, Status newStatus) throws ElementNotFoundException{
 
         User user = userService.getUser(user_id);
 
@@ -81,7 +81,7 @@ public class AdminFacade {
         userService.saveUser(user);
     }
 
-    public void deleteById(Long id) throws ElementNotFoundException {
+    public void deleteUserById(Long id) throws ElementNotFoundException {
 
         if (userService.existsById(id)){
 
@@ -92,7 +92,7 @@ public class AdminFacade {
         }
     }
 
-    public void deleteByUsername(String username) throws ElementNotFoundException{
+    public void deleteUserByUsername(String username) throws ElementNotFoundException{
 
         if (userService.existsByUsername(username)){
 
@@ -103,7 +103,7 @@ public class AdminFacade {
         }
     }
 
-    public void deleteAll() {
+    public void deleteAllUser() {
 
         userService.deleteAll();
     }
