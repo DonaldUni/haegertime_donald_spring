@@ -1,19 +1,15 @@
 package haegerConsulting.Haegertime_SpringBoot;
 
 import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.ElementNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
 import haegerConsulting.Haegertime_SpringBoot.model.*;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.WorktimeBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
-import haegerConsulting.Haegertime_SpringBoot.repository.UserRepository;
 import haegerConsulting.Haegertime_SpringBoot.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -155,11 +151,5 @@ public class App {
 			}
 		});
 	}
-
-
-
-
-
-
 
 }

@@ -2,13 +2,15 @@ package haegerConsulting.Haegertime_SpringBoot.controller;
 
 
 import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateException;
-import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
+import haegerConsulting.Haegertime_SpringBoot.exceptions.ElementNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.facade.AdminFacade;
+import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
+import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/API/Haegertime/admins")
@@ -18,25 +20,168 @@ public class AdminController {
     private AdminFacade adminFacade;
 
 
+    //Get
+    //spezialisierten Get-Methoden
 
-//    @PostMapping("/user")
-//    public User createUser(@RequestBody User user){
-//
-//        User user1 = null;
-//        try {
-//
-//            user1 =  adminFacade.create(user);
-//
-//        } catch (DuplicateException | UsernameEmptyException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return user1;
-//    }
-
+    //Gemeinsamen Get-Methoden
     @GetMapping
-    public Iterable<User> getAllUser(){
+    public Iterable<User> getAllUser(){ return adminFacade.getAllUser(); }
 
-        return adminFacade.getAllUser();
+    @GetMapping("/get/{id}")
+    public User getUser(@PathVariable(value = "id") Long id){
+
+        User user = null;
+
+        try {
+            user = adminFacade.getUser(id);
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    @GetMapping("/getMyAccountData/{id}")
+    public String getMyAccountData(@PathVariable(value = "id") Long id){
+        String accountData = "";
+
+        try {
+            User user = adminFacade.getUser(id);
+            accountData = "My Account { \n" +
+                    "personId=" + user.getId() +"\n"+
+                    "employeeNummer=" + user.getEmployeeNummer() +"\n"+
+                    "userName='" + user.getUserName() + '\'' +"\n"+
+                    "email='" + user.getEmail() + '\'' +"\n"+
+                    "power=" + user.getPower() +"\n"+
+                    "numberOfUsedHoliday=" + user.getNumberOfUsedHoliday() +"\n"+
+                    "numberOfRestHoliday=" + user.getNumberOfRestHoliday() +"\n"+
+                    "numberOfSickDay=" + user.getNumberOfSickDay() +"\n"+
+                    '}';
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return accountData;
+    }
+
+    @GetMapping("/getAllMyWorktime/{id}")
+    public Iterable<Worktime> getAllMyWorktime(@PathVariable(value = "id") Long id){
+
+        Iterable<Worktime> worktimes = null;
+        try {
+            worktimes = adminFacade.getAllMyWorktime(id);
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return worktimes;
+    }
+
+    @GetMapping("/getAllMyUnfinalWorktime/{id}")
+    public Iterable<Worktime> getAllMyUnfinalWorktime(@PathVariable(value = "id") Long id){
+
+        Iterable<Worktime> worktimes = null;
+        try {
+            worktimes = adminFacade.getAllMyUnfinalWorktime(id);
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return worktimes;
+    }
+
+    @GetMapping("/getMyOverUndUndertime/{id}")
+    public String getMyOverUndUndertime(@PathVariable(value = "id") Long id){
+
+        Iterable<Worktime> finalWorktimes = null;
+        Iterable<Worktime> unfinalWorktimes = null;
+
+        float finalOvertime = 0;
+        float finalUndertime = 0;
+        float unfinalOvertime = 0;
+        float unfinalUndertime = 0;
+
+        try {
+            finalWorktimes = adminFacade.getAllMyFinalWorktime(id);
+            unfinalWorktimes = adminFacade.getAllMyUnfinalWorktime(id);
+
+            for (Worktime worktime: finalWorktimes) {
+                finalOvertime = finalOvertime + worktime.getOvertime();
+                finalUndertime = finalUndertime + worktime.getUndertime();
+            }
+            for (Worktime worktime: unfinalWorktimes) {
+                unfinalOvertime = unfinalOvertime + worktime.getOvertime();
+                unfinalUndertime = unfinalUndertime + worktime.getUndertime();
+            }
+
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String  message = "My finalise Overtime are "+ finalOvertime +" und my finalise Undertime are "+finalUndertime +" \n"+
+                "My finalise Overtime are "+ unfinalOvertime +" und my finalise Undertime are "+ unfinalUndertime +".";
+
+        return message;
+    }
+
+    @GetMapping("/getMyRequestOfHolidays/{id}")
+    public Iterable<RequestOfHoliday> getMyRequestOfHolidays(@PathVariable(value = "id") Long id){
+
+        Iterable<RequestOfHoliday> requestOfHolidays = null;
+        try {
+            requestOfHolidays = adminFacade.getMyRequestOfHolidays(id);
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return requestOfHolidays;
+    }
+
+    @GetMapping("/getMyRestHolidays/{id}")
+    public String getMyRestHolidays(@PathVariable(value = "id") Long id){
+
+        User user = null;
+        try {
+            user = adminFacade.getUser(id);
+        } catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        assert user != null;
+        return "" + user.getNumberOfRestHoliday();
+    }
+
+    //Post
+
+
+    //Gemeinsamen Post-Methoden
+    @PostMapping("/UnfinalWorktime")
+    public Worktime createUnfinalWorktime(@Valid @RequestBody Worktime worktime){
+
+        Worktime worktime1 = null;
+
+        try {
+
+            worktime1 = adminFacade.createUnfinalWorktime(worktime);
+        } catch (DuplicateException e) {
+            e.printStackTrace();
+        }
+
+        return worktime1;
+    }
+
+    @PostMapping("/RequestOFHoliday")
+    public RequestOfHoliday createRequestOfHoliday(@Valid @RequestBody RequestOfHoliday requestOfHoliday){
+
+        RequestOfHoliday requestOfHoliday1 = null;
+
+        try {
+
+            requestOfHoliday1 = adminFacade.createRequestOfHolidays(requestOfHoliday);
+        } catch (DuplicateException e) {
+            e.printStackTrace();
+        }
+
+        return requestOfHoliday1;
     }
 }

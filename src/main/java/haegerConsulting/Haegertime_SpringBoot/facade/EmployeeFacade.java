@@ -34,6 +34,11 @@ public class EmployeeFacade {
         return userService.getAllUser();
     }
 
+    public User getUser(long id) throws ElementNotFoundException {
+
+        return userService.getUser(id);
+    }
+
     public User getMyAccountData(long id) throws ElementNotFoundException {
 
         return userService.getUser(id);

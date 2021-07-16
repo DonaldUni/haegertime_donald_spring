@@ -33,6 +33,12 @@ public class AdminFacade {
     @Autowired
     private ProjectService projectService;
 
+
+    public User getUser(long id) throws ElementNotFoundException {
+
+        return userService.getUser(id);
+    }
+
     public User createUser(User user) throws UsernameEmptyException, DuplicateException {
 
         if (user.getId() != null && userService.existsById(user.getId())){
