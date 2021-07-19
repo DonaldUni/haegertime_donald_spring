@@ -20,13 +20,13 @@ public class Project {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinTable(name = "User_Project",
                joinColumns = @JoinColumn(name = "Project_ID"),
-               inverseJoinColumns = @JoinColumn(name = "Person_ID")
+               inverseJoinColumns = @JoinColumn(name = "User_employeeNummer", referencedColumnName = "employeeNummer")
                 )
     private List<User> users = new ArrayList<>();
 
@@ -36,6 +36,25 @@ public class Project {
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Project(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Project(String name, String description, Customer customer) {
+        this.name = name;
+        this.description = description;
+        this.customer = customer;
+    }
+
+    public Project(String name, String description, Customer customer, List<User> users) {
+        this.name = name;
+        this.description = description;
+        this.customer = customer;
+        this.users = users;
     }
 
     public Project(String name, String description, ArrayList<User> users) {

@@ -52,6 +52,18 @@ public class CustomerService {
         return customer.get();
     }
 
+    public Customer getCustomerByCustomerId(long customer_id) throws ElementNotFoundException {
+
+        Optional<Customer> customer = customerRepository.findByCustomerId(customer_id);
+
+        if (customer.isEmpty()){
+
+            throw new ElementNotFoundException("This element has been not found.");
+        }
+
+        return customer.get();
+    }
+
     public List<Customer> getAllCustomers(){
 
         return customerRepository.findAll();

@@ -20,6 +20,13 @@ public interface WorktimeRepository extends JpaRepository<Worktime, Long> {
 
     Iterable<Worktime> findAllByUserIdAndWorktimeType(Long userId, WorktimeType worktimeType); // zu testen, wenn der controller fertig wird
 
+    Optional<Worktime> findByUser_employeeNummerAndWorktimeType(long employeeNummer, WorktimeType worktimeType); // zu testen, wenn der controller fertig wird
+
+    Iterable<Worktime> findAllByUser_employeeNummer(long employeeNummer);
+
+    Iterable<Worktime> findAllByUser_employeeNummerAndWorktimeType(long employeeNummer, WorktimeType worktimeType); // zu testen, wenn der controller fertig wird
+
+
     void deleteAllByWorktimeType(WorktimeType worktimeType);
 
 }

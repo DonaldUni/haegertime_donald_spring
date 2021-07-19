@@ -13,7 +13,6 @@ import haegerConsulting.Haegertime_SpringBoot.services.UserService;
 import haegerConsulting.Haegertime_SpringBoot.services.WorktimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,7 +195,7 @@ public class BookkeeperFacade {
 
     public Iterable<RequestOfHoliday> getMyRequestOfHolidays(Long user_id) throws ElementNotFoundException {
 
-        return requestOfHolidaysService.getRequestOfHolidaysByUserId(user_id);
+        return requestOfHolidaysService.getRequestOfHolidaysByEmployeeNummer(user_id);
     }
 
     public Float getMyRestHolidays(Long user_id) throws  ElementNotFoundException{

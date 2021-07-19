@@ -59,12 +59,12 @@ public class EmployeeController {
         return accountData;
     }
 
-    @GetMapping("/getAllMyWorktime/{id}")
-    public Iterable<Worktime> getAllMyWorktime(@PathVariable(value = "id") Long id){
+    @GetMapping("/getAllMyWorktime/{employeeNummer}")
+    public Iterable<Worktime> getAllMyWorktime(@PathVariable(value = "employeeNummer") long employeeNummer){
 
         Iterable<Worktime> worktimes = null;
         try {
-            worktimes = employeeFacade.getAllMyWorktime(id);
+            worktimes = employeeFacade.getAllMyWorktime(employeeNummer);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -72,12 +72,12 @@ public class EmployeeController {
         return worktimes;
     }
 
-    @GetMapping("/getAllMyUnfinalWorktime/{id}")
-    public Iterable<Worktime> getAllMyUnfinalWorktime(@PathVariable(value = "id") Long id){
+    @GetMapping("/getAllMyUnfinalWorktime/{employeeNummer}")
+    public Iterable<Worktime> getAllMyUnfinalWorktime(@PathVariable(value = "employeeNummer") long employeeNummer){
 
         Iterable<Worktime> worktimes = null;
         try {
-            worktimes = employeeFacade.getAllMyUnfinalWorktime(id);
+            worktimes = employeeFacade.getAllMyUnfinalWorktime(employeeNummer);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -85,8 +85,8 @@ public class EmployeeController {
         return worktimes;
     }
 
-    @GetMapping("/getMyOverUndUndertime/{id}")
-    public String getMyOverUndUndertime(@PathVariable(value = "id") Long id){
+    @GetMapping("/getMyOverUndUndertime/{employeeNummer}")
+    public String getMyOverUndUndertime(@PathVariable(value = "employeeNummer") long employeeNummer){
 
         Iterable<Worktime> finalWorktimes = null;
         Iterable<Worktime> unfinalWorktimes = null;
@@ -97,8 +97,8 @@ public class EmployeeController {
         float unfinalUndertime = 0;
 
         try {
-            finalWorktimes = employeeFacade.getAllMyFinalWorktime(id);
-            unfinalWorktimes = employeeFacade.getAllMyUnfinalWorktime(id);
+            finalWorktimes = employeeFacade.getAllMyFinalWorktime(employeeNummer);
+            unfinalWorktimes = employeeFacade.getAllMyUnfinalWorktime(employeeNummer);
 
             for (Worktime worktime: finalWorktimes) {
                 finalOvertime = finalOvertime + worktime.getOvertime();
@@ -119,12 +119,12 @@ public class EmployeeController {
         return message;
     }
 
-    @GetMapping("/getMyRequestOfHolidays/{id}")
-    public Iterable<RequestOfHoliday> getMyRequestOfHolidays(@PathVariable(value = "id") Long id){
+    @GetMapping("/getMyRequestOfHolidays/{employeeNummer}")
+    public Iterable<RequestOfHoliday> getMyRequestOfHolidays(@PathVariable(value = "employeeNummer") long employeeNummer){
 
         Iterable<RequestOfHoliday> requestOfHolidays = null;
         try {
-            requestOfHolidays = employeeFacade.getMyRequestOfHolidays(id);
+            requestOfHolidays = employeeFacade.getMyRequestOfHolidays(employeeNummer);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }

@@ -17,9 +17,7 @@ public class RequestOfHoliday {
 
 
     @ManyToOne
-    @JoinColumn(
-            name = "user_employeeNummer"
-    )
+    @JoinColumn(name = "user_employeeNummer", referencedColumnName = "employeeNummer")
     private User user;
 
     @Column
@@ -40,11 +38,11 @@ public class RequestOfHoliday {
     //Constructor
     public RequestOfHoliday(){ }
 
-    public RequestOfHoliday(int numberOfRequestedDay, Instant startDate, Instant finishDate) {
-        this.numberOfRequestedDay = numberOfRequestedDay;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-    }
+//    public RequestOfHoliday(int numberOfRequestedDay, Instant startDate, Instant finishDate) {
+//        this.numberOfRequestedDay = numberOfRequestedDay;
+//        this.startDate = startDate;
+//        this.finishDate = finishDate;
+//    }
 
     public RequestOfHoliday(User user, int numberOfRequestedDay, Instant startDate, Instant finishDate) {
         this.user = user;

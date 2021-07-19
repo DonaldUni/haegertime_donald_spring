@@ -74,6 +74,19 @@ public class UserService {
         }
     }
 
+    public User getUserByEmployeeNummer(long employeeNummer) throws ElementNotFoundException {
+
+        Optional<User> user = userRepository.findByEmployeeNummer(employeeNummer);
+
+        if (user.isPresent()){
+
+            return user.get();
+        }else{
+
+            throw new ElementNotFoundException("This element has been not found.");
+        }
+    }
+
     public void deleteById(Long id) throws ElementNotFoundException {
 
         if (userRepository.existsById(id)){
@@ -190,7 +203,7 @@ public class UserService {
 
     public Iterable<RequestOfHoliday> getMyRequestOfHolidays(Long user_id) throws ElementNotFoundException {
 
-        return requestOfHolidaysService.getRequestOfHolidaysByUserId(user_id);
+        return requestOfHolidaysService.getRequestOfHolidaysByEmployeeNummer(user_id);
     }
 
     public Float getMyRestHolidays(Long user_id) throws  ElementNotFoundException{

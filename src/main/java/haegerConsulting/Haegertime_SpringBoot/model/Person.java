@@ -8,7 +8,7 @@ public abstract class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "Person_Id")
+    @Column(name = "Person_Id", nullable = false, unique = true)
     private Long id;
 
     private String lastname;

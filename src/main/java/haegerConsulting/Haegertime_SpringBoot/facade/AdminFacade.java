@@ -3,7 +3,6 @@ package haegerConsulting.Haegertime_SpringBoot.facade;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.DuplicateException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.ElementNotFoundException;
 import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
-import haegerConsulting.Haegertime_SpringBoot.model.Project;
 import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
@@ -15,7 +14,6 @@ import haegerConsulting.Haegertime_SpringBoot.services.UserService;
 import haegerConsulting.Haegertime_SpringBoot.services.WorktimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class AdminFacade {
@@ -54,12 +52,9 @@ public class AdminFacade {
 
     }
 
-    public void updateUser(User newUser) throws ElementNotFoundException {
+    public User updateUser(User newUser) throws ElementNotFoundException {
 
-        User user = userService.getUser(newUser.getId());
-
-        userService.saveUser(user);
-
+        return userService.saveUser(newUser);
     }
 
     public void updateUsernameOfUser(Long user_id, String newUsername) throws ElementNotFoundException{
@@ -190,7 +185,7 @@ public class AdminFacade {
 
     public Iterable<RequestOfHoliday> getMyRequestOfHolidays(Long user_id) throws ElementNotFoundException {
 
-        return requestOfHolidaysService.getRequestOfHolidaysByUserId(user_id);
+        return requestOfHolidaysService.getRequestOfHolidaysByEmployeeNummer(user_id);
     }
 
     public Float getMyRestHolidays(Long user_id) throws  ElementNotFoundException{
