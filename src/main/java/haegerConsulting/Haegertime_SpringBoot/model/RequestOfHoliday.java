@@ -17,7 +17,7 @@ public class RequestOfHoliday {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_employeeNummer", referencedColumnName = "employeeNummer")
+    @JoinColumn(nullable = false)
     private User user;
 
     @Column

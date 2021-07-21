@@ -15,16 +15,9 @@ public class Worktime {
     private Long id;
 
     @ManyToOne
-    @JoinColumns(
-            {
-                    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false),
-                    @JoinColumn(name = "project_name", referencedColumnName = "name", nullable = false)
-            }
-    )
     private Project project;
 
     @ManyToOne
-    @JoinColumn( name = "user_employeeNummer", referencedColumnName = "employeeNummer", nullable = false)
     private User user;
 
     @Column(nullable = false)

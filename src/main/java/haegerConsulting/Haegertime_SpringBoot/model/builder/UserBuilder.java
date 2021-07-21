@@ -6,7 +6,7 @@ import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
 
 public class UserBuilder {
 
-    public Long personId;
+    public Long id;
     public String lastname;
     public String firstname;
     public long employeeNummer;
@@ -44,8 +44,8 @@ public class UserBuilder {
 
 
     // setter for Builder
-    public UserBuilder personId(Long personId) {
-        this.personId = personId;
+    public UserBuilder id(Long id) {
+        this.id = id;
         return this;
     }
 

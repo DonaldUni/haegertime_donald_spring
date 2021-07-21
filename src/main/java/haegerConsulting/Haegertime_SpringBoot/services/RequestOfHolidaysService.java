@@ -53,9 +53,9 @@ public class RequestOfHolidaysService {
         }
     }
 
-    public Iterable<RequestOfHoliday> getRequestOfHolidaysByEmployeeNummer(long employeeNummer) throws ElementNotFoundException{
+    public Iterable<RequestOfHoliday> getRequestOfHolidaysByUserId(long employeeNummer) throws ElementNotFoundException{
 
-        Iterable<RequestOfHoliday> requestOfHolidays = requestOfHolidaysRepository.findAllByUserId(employeeNummer);
+        Iterable<RequestOfHoliday> requestOfHolidays = requestOfHolidaysRepository.findByUserId(employeeNummer);
 
         if (requestOfHolidays == null){
 

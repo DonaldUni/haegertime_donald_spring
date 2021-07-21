@@ -3,8 +3,6 @@ package haegerConsulting.Haegertime_SpringBoot.model;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -12,10 +10,20 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "User")
 //@SequenceGenerator(name = "generator", initialValue = 1)
-public class User extends Person{
+public class User {
 
 
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
+    private Long id;
+
+    @Column(nullable = false)
+    private String lastname;
+
+    @Column(nullable = false)
+    private String firstname;
+
     @Column(nullable = false, unique = true)
     private long employeeNummer;
 
@@ -53,7 +61,9 @@ public class User extends Person{
     public User(){ }
 
     public User(UserBuilder builder){
-        super(builder.personId, builder.lastname, builder.firstname);
+        this.id = builder.id;
+        this.lastname = builder.lastname;
+        this.firstname = builder.firstname;
         employeeNummer = builder.employeeNummer;
         userName = builder.userName;
         password = builder.password;
@@ -67,6 +77,30 @@ public class User extends Person{
 
 
     //getter and setter
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
     public long getEmployeeNummer() {
         return employeeNummer;
     }
@@ -146,7 +180,7 @@ public class User extends Person{
     @Override
     public String toString() {
         return "User{" +
-                "personId=" + getId() +
+                "id=" + id +
                 "employeeNummer=" + employeeNummer +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +

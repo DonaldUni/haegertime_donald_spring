@@ -12,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -38,11 +37,11 @@ public class App {
 
 	public static void saveUserInDatabase(ConfigurableApplicationContext context){
 
-		var user = new UserBuilder().personId(0L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
+		var user = new UserBuilder().employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
 				.numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
-		var user1 = new UserBuilder().personId(0L).employeeNummer(6).userName("bara").lastname("Weiß").firstname("Barbara").password("password1").email("weiß_barbara@gmail.com")
+		var user1 = new UserBuilder().employeeNummer(6).userName("bara").lastname("Weiß").firstname("Barbara").password("password1").email("weiß_barbara@gmail.com")
 				.power(Power.Bookkeeper).numberOfUsedHoliday(10).numberOfRestHoliday(20).numberOfSickDay(2).build();
-		var user2 = new UserBuilder().personId(0L).employeeNummer(7).userName("JansK").lastname("Krüger").firstname("Jans").password("password2").email("jans_kruger@gmail.com")
+		var user2 = new UserBuilder().employeeNummer(7).userName("JansK").lastname("Krüger").firstname("Jans").password("password2").email("jans_kruger@gmail.com")
 				.power(Power.Administrator).numberOfUsedHoliday(15).numberOfRestHoliday(15).numberOfSickDay(0).build();
 
 		List<User> users = new ArrayList<>();
@@ -147,14 +146,22 @@ public class App {
 
 		WorktimeService worktimeService = context.getBean(WorktimeService.class);
 		ProjectService projectService = context.getBean(ProjectService.class);
+		UserService userService = context.getBean(UserService.class);
 
 		//users
-		var user = new UserBuilder().personId(0L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
-				.numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
-
-		var user1 = new UserBuilder().personId(0L).employeeNummer(6).userName("bara").lastname("Weiß").firstname("Barbara").password("password1").email("weiß_barbara@gmail.com")
-				.power(Power.Bookkeeper).numberOfUsedHoliday(10).numberOfRestHoliday(20).numberOfSickDay(2).build();
-
+//		var user = new UserBuilder().id(0L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
+//				.numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+//
+//		var user1 = new UserBuilder().id(1L).employeeNummer(6).userName("bara").lastname("Weiß").firstname("Barbara").password("password1").email("weiß_barbara@gmail.com")
+//				.power(Power.Bookkeeper).numberOfUsedHoliday(10).numberOfRestHoliday(20).numberOfSickDay(2).build();
+		User user = null;
+		User user1 = null;
+		try {
+			user = userService.getUser(1);
+			user1 = userService.getUser(2);
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
 		//project
 		Project project = null;
 		Project project1 = null;
@@ -168,9 +175,10 @@ public class App {
 		//Worktimes
 		List<Worktime> worktimes = new ArrayList<>();
 
-		Worktime worktime1 = new WorktimeBuilder().user(user).project(project).workhour(10).overtime(0).undertime(0).period("24.07.2021-31.07.2021").build();
-		Worktime worktime2 = new WorktimeBuilder().user(user).project(project1).workhour(20).overtime(0).undertime(0).period("24.07.2021-31.07.2021").build();
-		Worktime worktime3 = new WorktimeBuilder().user(user1).project(project1).workhour(30).overtime(0).undertime(0).period("24.07.2021-31.07.2021").build();
+		//.user(user)
+		Worktime worktime1 = new WorktimeBuilder().project(project).user(user).workhour(10).overtime(10).undertime(0).period("24.07.2021-31.07.2021").build();
+		Worktime worktime2 = new WorktimeBuilder().project(project1).user(user).workhour(20).overtime(20).undertime(10).period("24.07.2021-31.07.2021").build();
+		Worktime worktime3 = new WorktimeBuilder().project(project1).user(user1).workhour(30).overtime(15).undertime(0).period("24.07.2021-31.07.2021").build();
 
 		worktimes.add(worktime1);
 		worktimes.add(worktime2);

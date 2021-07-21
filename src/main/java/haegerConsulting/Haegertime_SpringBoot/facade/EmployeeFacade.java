@@ -9,6 +9,8 @@ import haegerConsulting.Haegertime_SpringBoot.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
 public class EmployeeFacade {
@@ -42,32 +44,50 @@ public class EmployeeFacade {
         return userService.getUser(id);
     }
 
-    public void updateMyAccountData(long id, String oldPassword, String newPassword) throws ElementNotFoundException{
+    public User updateMyAccountData(long id, String oldPassword, String newPassword) throws ElementNotFoundException{
 
         User user = userService.getUser(id);
 
         if (user.getPassword().equals(oldPassword)){
 
             user.setPassword(newPassword);
-            userService.saveUser(user);
+            user = userService.saveUser(user);
         }
+
+        return user;
     }
 
 
     // Methoden über Worktimes
+
+    public Worktime getWorktimeById(Long id) throws ElementNotFoundException {
+
+        return worktimeService.getWorktimeById(id);
+    }
+
+    public Iterable<Worktime> getAllWorktime(){
+
+        return worktimeService.getAllWorktime();
+    }
+
     public Worktime createUnfinalWorktime(Worktime unfinalWorktime) throws DuplicateException {
 
         return worktimeService.create(unfinalWorktime);
     }
 
-    public void updateUnfinalWorktime(Worktime unfinalWorktime) throws ElementNotFoundException {
+    public Worktime updateUnfinalWorktime(Worktime unfinalWorktime) throws ElementNotFoundException {
 
-        worktimeService.updateUnfinalWorktime(unfinalWorktime);
+        return worktimeService.updateUnfinalWorktime(unfinalWorktime);
     }
 
     public Iterable<Worktime> getAllMyWorktime(long employeeNummer) throws ElementNotFoundException {
 
         return worktimeService.getAllMyWorktime(employeeNummer);
+    }
+
+    public List<Worktime> getAllMyWorktimeByProjectID(Long projectID) throws ElementNotFoundException {
+
+        return worktimeService.getAllMyWorktimeByProjectID(projectID);
     }
 
     public Iterable<Worktime> getAllMyUnfinalWorktime(Long user_id) throws ElementNotFoundException {
@@ -85,9 +105,9 @@ public class EmployeeFacade {
         return worktimeService.getAllMyWorktime(user_id);  // Ab hier der Frontend wird die List von Alle Wortime holen und dann nur die Over- und Undertime anzeigen
     }
 
-    public void finaliseWorktime(Long worktime_id) throws ElementNotFoundException {
+    public Iterable<Worktime> finaliseAllMyUnfinalWorktime(Long userId) throws ElementNotFoundException {
 
-        worktimeService.finaliseUnfinalWorktime(worktime_id);
+        return worktimeService.finaliseAllMyUnfinalWorktime(userId);
     }
 
 
@@ -104,9 +124,9 @@ public class EmployeeFacade {
         return requestOfHolidaysService.create(requestOfHoliday);
     }
 
-    public Iterable<RequestOfHoliday> getMyRequestOfHolidays(long employeeNummer) throws ElementNotFoundException {
+    public Iterable<RequestOfHoliday> getMyRequestOfHolidays(Long userId) throws ElementNotFoundException {
 
-        return requestOfHolidaysService.getRequestOfHolidaysByEmployeeNummer(employeeNummer);
+        return requestOfHolidaysService.getRequestOfHolidaysByUserId(userId);
     }
 
     public Float getMyRestHolidays(Long user_id) throws  ElementNotFoundException{

@@ -10,10 +10,8 @@ import java.util.Optional;
 @Repository
 public interface RequestOfHolidaysRepository extends JpaRepository<RequestOfHoliday, Long> {
 
-    Iterable<RequestOfHoliday> findAllByUserId(Long userId);
+    Iterable<RequestOfHoliday> findByUserId(Long userId);
 
-    Optional<RequestOfHoliday> findByUser_employeeNummer(long employeeNummer);
-
-//    Iterable<RequestOfHoliday> findAllByUser_employeeNumme(long employeeNummer);
+    Optional<RequestOfHoliday> findById(Long id);
 
 }

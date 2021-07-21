@@ -29,48 +29,11 @@ public class WorktimeService {
         return worktimeRepository.save(worktime);
     }
 
-    public Worktime getUnfinalWorktime(long employeeNummer) throws ElementNotFoundException {
+    public Iterable<Worktime> getAllMyUnfinalWorktime(Long userId) throws ElementNotFoundException{
 
-        Optional<Worktime> unfinalWorktime = worktimeRepository.findByUser_employeeNummerAndWorktimeType(employeeNummer, WorktimeType.Unfinal);
+        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserIdAndWorktimeType(userId, WorktimeType.Unfinal);
 
-        if (unfinalWorktime.isEmpty()){
-
-            throw new ElementNotFoundException("This element has been not found.");
-        }
-
-        return unfinalWorktime.get();
-    }
-
-    public Worktime getFinalWorktime(long employeeNummer) throws ElementNotFoundException{
-
-        Optional<Worktime> finalWorktime = worktimeRepository.findByUser_employeeNummerAndWorktimeType(employeeNummer, WorktimeType.Final);
-
-        if (finalWorktime.isEmpty()){
-
-            throw new ElementNotFoundException("This element has been not found.");
-        }
-
-        return finalWorktime.get();
-    }
-
-    public Iterable<Worktime> getAllMyUnfinalWorktime(long employeeNummer) throws ElementNotFoundException{
-
-        Iterable<Worktime> unfinalWorktime = worktimeRepository.findAllByUser_employeeNummerAndWorktimeType(employeeNummer, WorktimeType.Unfinal);
-
-        if (unfinalWorktime !=null){
-
-            throw new ElementNotFoundException("This element has been not found.");
-        }else{
-
-            return unfinalWorktime;
-        }
-    }
-
-    public Iterable<Worktime> getAllMyFinalWorktime(long employeeNummer) throws ElementNotFoundException{
-
-        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserIdAndWorktimeType(employeeNummer, WorktimeType.Final);
-
-        if (finalWorktime !=null){
+        if (finalWorktime == null){
 
             throw new ElementNotFoundException("This element has been not found.");
         }else{
@@ -79,11 +42,37 @@ public class WorktimeService {
         }
     }
 
-    public Iterable<Worktime> getAllMyWorktime(long employeeNummer) throws ElementNotFoundException{
+    public Iterable<Worktime> getAllMyFinalWorktime(long employeeNummer) throws ElementNotFoundException{
 
-        Iterable<Worktime> worktimes = worktimeRepository.findAllByUser_employeeNummer(employeeNummer);
+        Iterable<Worktime> finalWorktime = worktimeRepository.findAllByUserIdAndWorktimeType(employeeNummer, WorktimeType.Final);
 
-        if (worktimes !=null){
+        if (finalWorktime == null){
+
+            throw new ElementNotFoundException("This element has been not found.");
+        }else{
+
+            return finalWorktime;
+        }
+    }
+
+    public Iterable<Worktime> getAllMyWorktime(Long userId) throws ElementNotFoundException{
+
+        Iterable<Worktime> worktimes = worktimeRepository.findAllByUserId(userId);
+
+        if (worktimes == null){
+
+            throw new ElementNotFoundException("This element has been not found.");
+        }else{
+
+            return worktimes;
+        }
+    }
+
+    public List<Worktime> getAllMyWorktimeByProjectID(Long projectID) throws ElementNotFoundException{
+
+        List<Worktime> worktimes = worktimeRepository.findByProjectId(projectID);
+
+        if (worktimes == null){
 
             throw new ElementNotFoundException("This element has been not found.");
         }else{
@@ -107,13 +96,29 @@ public class WorktimeService {
         return worktimeRepository.findAll();
     }
 
-    public void updateUnfinalWorktime(Worktime newWorktime) throws ElementNotFoundException{
+    //test Methoden
+    public Worktime getWorktimeById(Long id) throws ElementNotFoundException {
+
+        Optional<Worktime> worktime = worktimeRepository.findById(id);
+
+        if (worktime.isEmpty()){
+
+            throw new ElementNotFoundException("This element has been not found.");
+        }
+
+        return worktime.get();
+    }
+
+
+
+    public Worktime updateUnfinalWorktime(Worktime newWorktime) throws ElementNotFoundException{
 
         Optional<Worktime> optional_unfinalWorktime = worktimeRepository.findById(newWorktime.getId());
 
         if (optional_unfinalWorktime.isPresent()){
 
-            worktimeRepository.save(newWorktime);
+            return worktimeRepository.save(newWorktime);
+
         }else{
 
             throw new ElementNotFoundException("This element has been not found.");
@@ -134,15 +139,17 @@ public class WorktimeService {
         }
     }
 
-    public void finaliseAllMyUnfinalWorktime(long employeeNummer) {
+    public Iterable<Worktime> finaliseAllMyUnfinalWorktime(Long userId) {
 
-        Iterable<Worktime> worktimes = worktimeRepository.findAllByUser_employeeNummerAndWorktimeType(employeeNummer, WorktimeType.Unfinal);
+        Iterable<Worktime> worktimes = worktimeRepository.findAllByUserIdAndWorktimeType(userId, WorktimeType.Unfinal);
 
         worktimes.forEach(worktime -> {
             worktime.setWorktimeType(WorktimeType.Final);
             worktimeRepository.save(worktime);
 
         });
+
+        return worktimeRepository.findAllByUserIdAndWorktimeType(userId, WorktimeType.Final);
     }
 
     public void deleteById(Long id) throws ElementNotFoundException {

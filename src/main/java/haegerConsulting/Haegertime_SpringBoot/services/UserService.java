@@ -203,7 +203,7 @@ public class UserService {
 
     public Iterable<RequestOfHoliday> getMyRequestOfHolidays(Long user_id) throws ElementNotFoundException {
 
-        return requestOfHolidaysService.getRequestOfHolidaysByEmployeeNummer(user_id);
+        return requestOfHolidaysService.getRequestOfHolidaysByUserId(user_id);
     }
 
     public Float getMyRestHolidays(Long user_id) throws  ElementNotFoundException{
