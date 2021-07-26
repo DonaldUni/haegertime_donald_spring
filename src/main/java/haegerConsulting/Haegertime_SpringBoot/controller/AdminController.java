@@ -134,7 +134,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/deletes")
-    public void deleteUserById(){
+    public void deleteAllUser(){
 
         adminFacade.deleteAllUser();
     }

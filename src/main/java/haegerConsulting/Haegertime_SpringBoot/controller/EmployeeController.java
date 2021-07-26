@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping ("/API/Haegertime/users")
 public class EmployeeController {
 
+
+
     @Autowired
     private EmployeeFacade employeeFacade;
+
+
 
 
     //Get
@@ -24,15 +28,11 @@ public class EmployeeController {
     public Iterable<User> getAllUser(){ return employeeFacade.getAllUser(); }
 
     @GetMapping("/get/{id}")
-    public User getUser(@PathVariable(value = "id") Long id){
+    public User getUser(@PathVariable(value = "id") Long id) throws ElementNotFoundException{
 
         User user = null;
 
-        try {
-             user = employeeFacade.getUser(id);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        user = employeeFacade.getUser(id);
 
         return user;
     }
