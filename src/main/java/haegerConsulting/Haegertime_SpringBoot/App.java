@@ -39,9 +39,9 @@ public class App {
 
 		var user = new UserBuilder().employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
 				.numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
-		var user1 = new UserBuilder().employeeNummer(6).userName("bara").lastname("Weiß").firstname("Barbara").password("password1").email("weiß_barbara@gmail.com")
+		var user1 = new UserBuilder().employeeNummer(6).userName("bara").lastname("Weiss").firstname("Barbara").password("password1").email("weiss_barbara@gmail.com")
 				.power(Power.Bookkeeper).numberOfUsedHoliday(10).numberOfRestHoliday(20).numberOfSickDay(2).build();
-		var user2 = new UserBuilder().employeeNummer(7).userName("JansK").lastname("Krüger").firstname("Jans").password("password2").email("jans_kruger@gmail.com")
+		var user2 = new UserBuilder().employeeNummer(7).userName("JansK").lastname("Kruger").firstname("Jans").password("password2").email("jans_kruger@gmail.com")
 				.power(Power.Administrator).numberOfUsedHoliday(15).numberOfRestHoliday(15).numberOfSickDay(0).build();
 
 		List<User> users = new ArrayList<>();

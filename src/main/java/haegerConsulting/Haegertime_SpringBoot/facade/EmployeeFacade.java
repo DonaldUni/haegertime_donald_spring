@@ -80,9 +80,9 @@ public class EmployeeFacade {
         return worktimeService.updateUnfinalWorktime(unfinalWorktime);
     }
 
-    public Iterable<Worktime> getAllMyWorktime(long employeeNummer) throws ElementNotFoundException {
+    public Iterable<Worktime> getAllMyWorktime(long userId) throws ElementNotFoundException {
 
-        return worktimeService.getAllMyWorktime(employeeNummer);
+        return worktimeService.getAllMyWorktime(userId);
     }
 
     public List<Worktime> getAllMyWorktimeByProjectID(Long projectID) throws ElementNotFoundException {
