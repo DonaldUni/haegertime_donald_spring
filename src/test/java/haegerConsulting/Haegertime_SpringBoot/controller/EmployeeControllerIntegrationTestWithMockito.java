@@ -2,12 +2,15 @@ package haegerConsulting.Haegertime_SpringBoot.controller;
 
 import haegerConsulting.Haegertime_SpringBoot.facade.EmployeeFacade;
 import haegerConsulting.Haegertime_SpringBoot.model.Project;
+import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.builder.WorktimeBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
+import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.WorktimeType;
+import haegerConsulting.Haegertime_SpringBoot.repository.RequestOfHolidaysRepository;
 import haegerConsulting.Haegertime_SpringBoot.repository.UserRepository;
 import haegerConsulting.Haegertime_SpringBoot.repository.WorktimeRepository;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,13 +28,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.NestedServletException;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,6 +58,9 @@ class EmployeeControllerIntegrationTestWithMockito {
 
     @MockBean
     private WorktimeRepository worktimeRepository;
+
+    @MockBean
+    RequestOfHolidaysRepository requestOfHolidaysRepository;
 
 
     private final String BASEURL = "http://localhost:8082/API/Haegertime/users";
@@ -245,11 +255,10 @@ class EmployeeControllerIntegrationTestWithMockito {
         ObjectMapper mapper = new ObjectMapper();
         String expectedJson = mapper.writeValueAsString(worktimeIterable);
 
-        mockMvc.perform(put(BASEURL + "/finaliseAllMyUnfinalWorktime/1"))
+        mockMvc.perform(put(BASEURL + "/finaliseAllMyUnfinalWorktime/{userId}", 1L))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(expectedJson));
     }
-
 
     @Test
     public void updateMyAccountData() throws Exception {
@@ -261,9 +270,8 @@ class EmployeeControllerIntegrationTestWithMockito {
 
         var optionalUser = Optional.of(savedUser);
 
-        var updatedUser = new UserBuilder().id(1L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien")
-                .password("passwordUpdate").email("sebastien@gmail.com")
-                .numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+        var updatedUser = savedUser;
+        updatedUser.setPassword("passwordUpdate");
 
         //when
         when(userRepository.findById(1L)).thenReturn(optionalUser);
@@ -271,24 +279,130 @@ class EmployeeControllerIntegrationTestWithMockito {
 
         //then
         ObjectMapper mapper = new ObjectMapper();
-        String returnValue = "My Account { \n" +
+        String expectedString = "My Account { \n" +
                 "Id = " + updatedUser.getId() +"\n"+
                 "password = " + updatedUser.getPassword() +"\n";
-        String expectedJson = mapper.writeValueAsString(returnValue);
 
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("userId", "1");
-//        params.add("oldPassword", "password0");
-//        params.add("newPassword", "passwordUpdate");
-
-        mockMvc.perform(put(BASEURL + "/updateMyAccountData" + "?userId=1&oldPassword=password0&newPassword=passwordUpdated"))
+        mockMvc.perform(put(BASEURL + "/updateMyAccountData")   // oder mit "?userId=1&oldPassword=password0&newPassword=passwordUpdated"
+                .param("userId", "1")
+                .param("oldPassword","password0" )
+                .param("newPassword", "passwordUpdate"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(content().string(expectedJson));
-//                .param("userId", "1")
-//                .param("oldPassword", "password0").param("newPassword", "passwordUpdate"))
-//                .andDo(print());
-//
+                .andExpect(content().string(expectedString));
+
     }
+
+    @Test
+    public void updateUnfinalWorktime() throws Exception {
+
+        //given
+        var user = new UserBuilder().id(1L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
+                .numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+        var project = new Project("Test1", "Beschreibung von Test1.");
+
+        var worktime = new WorktimeBuilder().id(1L).project(project).user(user).workhour(10).overtime(10).type(WorktimeType.Unfinal).undertime(0).period("24.07.2021-31.07.2021").build();
+        var optionalWorktime = Optional.of(worktime);
+
+        //when
+        when(worktimeRepository.findById(worktime.getId())).thenReturn(optionalWorktime);
+        Worktime updatedWorktime = worktime;
+        updatedWorktime.setWorkhour(100);
+        when(worktimeRepository.save(any())).thenReturn(updatedWorktime);
+
+        //then
+        ObjectMapper mapper = new ObjectMapper();
+        String json_of_updatedWorktime = mapper.writeValueAsString(updatedWorktime);
+        mockMvc.perform(put(BASEURL + "/updateUnfinalWorktime")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json_of_updatedWorktime))
+                .andExpect(status().is2xxSuccessful())
+                //.andDo(print());
+                .andExpect(content().string(json_of_updatedWorktime));
+    }
+
+
+
+    //Post-Methoden
+    @Test
+    void createRequestOfHoliday() throws Exception {
+
+        //given
+        var mapper = new ObjectMapper();
+
+        var user = new UserBuilder().id(10L).userName("Test").employeeNummer(17).lastname("Test").firstname("Sebastien").password("password0").email("asd@gmail.com")
+                .power(Power.Employee).status(Status.actived).numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+
+        RequestOfHoliday requestOfHoliday = new RequestOfHoliday(user, 10, Instant.now().plus(Duration.ofDays(10)), Instant.now().plus(Duration.ofDays(20)));
+
+
+        var json_of_request = mapper.writeValueAsString(requestOfHoliday);
+
+//        String json_of_request1 = "{\n" +
+//                "        \n" +
+//                "        \"user\": {\n" +
+//                "            \"id\": 1,\n" +
+//                "            \"lastname\": \"Schwarz\",\n" +
+//                "            \"firstname\": \"Sebastien\",\n" +
+//                "            \"employeeNummer\": 5,\n" +
+//                "            \"userName\": \"Sebas\",\n" +
+//                "            \"password\": \"password0\",\n" +
+//                "            \"email\": \"sebastien@gmail.com\",\n" +
+//                "            \"power\": \"Employee\",\n" +
+//                "            \"status\": \"actived\",\n" +
+//                "            \"numberOfUsedHoliday\": 0.0,\n" +
+//                "            \"numberOfRestHoliday\": 30.0,\n" +
+//                "            \"numberOfSickDay\": 0.0,\n" +
+//                "            \"numberOfHoliday\": 30.0\n" +
+//                "        },\n" +
+//                "        \"numberOfRequestedDay\": 10,\n" +
+//                "        \"startDate\": \"2021-08-14T12:59:10.979732Z\",\n" +
+//                "        \"finishDate\": \"2021-08-24T12:59:10.979732Z\",\n" +
+//                "        \"status\": \"Pending\",\n" +
+//                "        \"time\": \"2021-08-04T12:59:10.979732Z\"\n" +
+//                "    }";
+//        RequestOfHoliday requestOfHolidayFromJson = mapper.readValue(json_of_request1, RequestOfHoliday.class);
+
+
+        //when
+        //when(requestOfHolidaysRepository.existsById(requestOfHoliday.getId())).thenReturn(false);
+        requestOfHoliday.setId(1L);
+        when(requestOfHolidaysRepository.save(any())).thenReturn(requestOfHoliday);
+
+        //then
+        mockMvc.perform(post("http://localhost:8082/API/Haegertime/users/RequestOFHoliday")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json_of_request))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(mapper.writeValueAsString(requestOfHoliday)));
+
+
+    }
+
+    @Test void createUnfinalWorktime() throws Exception{
+
+        //given
+        var user = new UserBuilder().id(1L).employeeNummer(5).userName("Sebas").lastname("Schwarz").firstname("Sebastien").password("password0").email("sebastien@gmail.com")
+                .numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+        var project = new Project("Test1", "Beschreibung von Test1.");
+        Worktime worktime = new WorktimeBuilder().project(project).user(user).workhour(10).overtime(10).type(WorktimeType.Unfinal).undertime(0).period("24.07.2021-31.07.2021").build();
+        Worktime worktime1 = worktime;
+        worktime1.setId(1L);
+        ObjectMapper mapper = new ObjectMapper();
+        String json_of_worktime = mapper.writeValueAsString(worktime);
+        String json_of_worktime1 = mapper.writeValueAsString(worktime1);
+
+        //when
+        when(worktimeRepository.save(any())).thenReturn(worktime1);
+
+        //then
+        mockMvc.perform(post(BASEURL + "/UnfinalWorktime")
+                        . contentType(MediaType.APPLICATION_JSON)
+                        .content(json_of_worktime))
+                .andExpect(content().string(json_of_worktime1));
+        verify(worktimeRepository, times(1)).save(any());
+    }
+
+
 
 
 

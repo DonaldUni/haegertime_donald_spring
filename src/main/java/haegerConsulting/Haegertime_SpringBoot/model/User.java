@@ -6,6 +6,7 @@ import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "User")
@@ -55,7 +56,7 @@ public class User {
     private float numberOfSickDay;
 
     @Column(nullable = false)
-    private int NUMBEROFHOLIDAY;
+    private float numberOfHoliday;
 
     //Constructor
     public User(){ }
@@ -72,7 +73,7 @@ public class User {
         status = builder.status;
         numberOfUsedHoliday = builder.numberOfUsedHoliday;
         numberOfRestHoliday = builder.numberOfRestHoliday;
-        NUMBEROFHOLIDAY = builder.NUMBEROFHOLIDAY;
+        numberOfHoliday = builder.numberOfHoliday;
     }
 
 
@@ -173,15 +174,17 @@ public class User {
         this.numberOfSickDay = numberOfSickDay;
     }
 
-    public int getNUMBEROFHOLIDAY() {
-        return NUMBEROFHOLIDAY;
+    public float getNumberOfHoliday() {
+        return numberOfHoliday;
     }
+
+
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                "employeeNummer=" + employeeNummer +
+                ", employeeNummer=" + employeeNummer +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
@@ -190,8 +193,20 @@ public class User {
                 ", numberOfUsedHoliday=" + numberOfUsedHoliday +
                 ", numberOfRestHoliday=" + numberOfRestHoliday +
                 ", numberOfSickDay=" + numberOfSickDay +
-                ", NUMBEROFHOLIDAY=" + NUMBEROFHOLIDAY +
+                ", NUMBEROFHOLIDAY=" + numberOfHoliday +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return employeeNummer == user.employeeNummer && Float.compare(user.numberOfUsedHoliday, numberOfUsedHoliday) == 0 && Float.compare(user.numberOfRestHoliday, numberOfRestHoliday) == 0 && Float.compare(user.numberOfSickDay, numberOfSickDay) == 0 && Float.compare(user.numberOfHoliday, numberOfHoliday) == 0 && id.equals(user.id) && lastname.equals(user.lastname) && firstname.equals(user.firstname) && userName.equals(user.userName) && password.equals(user.password) && email.equals(user.email) && power == user.power && status == user.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastname, firstname, employeeNummer, userName, password, email, power, status, numberOfUsedHoliday, numberOfRestHoliday, numberOfSickDay, numberOfHoliday);
+    }
 }

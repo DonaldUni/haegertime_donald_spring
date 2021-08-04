@@ -114,29 +114,23 @@ public class AdminController {
 
     //delete
     @DeleteMapping("/deletes/user/{id}")
-    public void deleteUserById(@PathVariable(value = "id") Long userId){
+    public String deleteUserById(@PathVariable(value = "id") Long userId) throws ElementNotFoundException {
 
-        try {
-            adminFacade.deleteUserById(userId);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        return adminFacade.deleteUserById(userId);
+
     }
 
     @DeleteMapping("/deletes/user")
-    public void deleteUserByUsername(@RequestParam String username){
+    public String deleteUserByUsername(@RequestParam String username) throws ElementNotFoundException {
 
-        try {
-            adminFacade.deleteUserByUsername(username);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        return adminFacade.deleteUserByUsername(username);
+
     }
 
     @DeleteMapping("/deletes")
-    public void deleteAllUser(){
+    public String deleteAllUser(){
 
-        adminFacade.deleteAllUser();
+        return adminFacade.deleteAllUser();
     }
 
 

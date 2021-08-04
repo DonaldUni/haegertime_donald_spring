@@ -26,7 +26,8 @@ public class WorktimeService {
             throw new DuplicateException("This element already exist.");
         }
 
-        return worktimeRepository.save(worktime);
+        Worktime worktime1 = worktimeRepository.save(worktime);
+        return worktime1;
     }
 
     public Iterable<Worktime> getAllMyUnfinalWorktime(Long userId) throws ElementNotFoundException{

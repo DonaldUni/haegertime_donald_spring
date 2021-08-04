@@ -19,7 +19,7 @@ public class UserBuilder {
     public float numberOfUsedHoliday = 0;
     public float numberOfRestHoliday = 30;
     public float numberOfSickDay = 0 ;
-    public final int NUMBEROFHOLIDAY = 30;
+    public float numberOfHoliday = 30;
 
     public User build(){
 

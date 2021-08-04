@@ -242,16 +242,18 @@ public class EmployeeController {
     }
 
     @PutMapping("/updateUnfinalWorktime")
-    public Worktime updateUnfinalWorktime(@RequestBody Worktime worktime ){
+    public Worktime updateUnfinalWorktime(@RequestBody Worktime worktime){
 
         Worktime worktime1 = null;
         try {
-            worktime1 = employeeFacade.updateUnfinalWorktime(worktime);
+
+            Worktime worktime2 = employeeFacade.updateUnfinalWorktime(worktime);
+            worktime1 = worktime2;
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
 
-        return worktime;
+        return worktime1;
     }
 
     @PutMapping("/finaliseAllMyUnfinalWorktime/{userId}")

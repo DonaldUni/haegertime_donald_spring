@@ -6,6 +6,7 @@ import haegerConsulting.Haegertime_SpringBoot.exceptions.UsernameEmptyException;
 import haegerConsulting.Haegertime_SpringBoot.model.RequestOfHoliday;
 import haegerConsulting.Haegertime_SpringBoot.model.User;
 import haegerConsulting.Haegertime_SpringBoot.model.Worktime;
+import haegerConsulting.Haegertime_SpringBoot.model.builder.UserBuilder;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Power;
 import haegerConsulting.Haegertime_SpringBoot.model.enumerations.Status;
 import haegerConsulting.Haegertime_SpringBoot.services.ProjectService;
@@ -47,8 +48,21 @@ public class AdminFacade {
 
             throw new UsernameEmptyException();
         }
+//        var user1 = new UserBuilder().id(10L).userName("Test").employeeNummer(17).lastname("Test").firstname("Sebastien").password("password0").email("asd@gmail.com")
+//                .power(Power.Employee).status(Status.actived).numberOfUsedHoliday(0).numberOfRestHoliday(30).numberOfSickDay(0).build();
+//
+//        if (user.getId() == user1.getId() &&
+//        user.getUserName().equals(user1.getUserName()) && user.getLastname().equals(user1.getLastname()) &&
+//        user.getFirstname().equals(user1.getFirstname()) && user.getEmployeeNummer() == user1.getEmployeeNummer() &&
+//                user.getEmail().equals(user1.getEmail()) && user.getNumberOfHoliday() == user1.getNumberOfHoliday() &&
+//                user.getNumberOfUsedHoliday() == user1.getNumberOfUsedHoliday() && user.getNumberOfRestHoliday() == user1.getNumberOfRestHoliday()
+//                && user.getNumberOfSickDay() == user1.getNumberOfSickDay()){
+//
+//            System.out.println("yes");
+//        }
 
-        return userService.saveUser(user);
+        User user2 = userService.saveUser(user);
+        return user2;
 
     }
 
@@ -82,31 +96,31 @@ public class AdminFacade {
         userService.saveUser(user);
     }
 
-    public void deleteUserById(Long id) throws ElementNotFoundException {
+    public String deleteUserById(Long id) throws ElementNotFoundException {
 
         if (userService.existsById(id)){
 
-            userService.deleteById(id);
+            return userService.deleteById(id);
         }else {
 
             throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
-    public void deleteUserByUsername(String username) throws ElementNotFoundException{
+    public String  deleteUserByUsername(String username) throws ElementNotFoundException{
 
         if (userService.existsByUsername(username)){
 
-            userService.deleteByUsername(username);
+            return userService.deleteByUsername(username);
         }else {
 
             throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
-    public void deleteAllUser() {
+    public String deleteAllUser() {
 
-        userService.deleteAll();
+        return userService.deleteAll();
     }
 
     //Methode für alle Employee

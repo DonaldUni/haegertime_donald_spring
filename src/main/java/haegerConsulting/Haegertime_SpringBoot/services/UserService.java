@@ -86,31 +86,38 @@ public class UserService {
         }
     }
 
-    public void deleteById(Long id) throws ElementNotFoundException {
+    public String deleteById(Long id) throws ElementNotFoundException {
 
         if (userRepository.existsById(id)){
 
             userRepository.deleteById(id);
+
+            return "The element with the id = " + id + " has been deleted";
+
         }else {
 
             throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
-    public void deleteByUsername(String username) throws ElementNotFoundException {
+    public String  deleteByUsername(String username) throws ElementNotFoundException {
 
         if (userRepository.existsByUserName(username)){
 
             userRepository.deleteByUserName(username);
+
+            return "The element with the id = " + username + " has been deleted";
         }else {
 
             throw new ElementNotFoundException("This element has been not found.");
         }
     }
 
-    public void deleteAll(){
+    public String deleteAll(){
 
         userRepository.deleteAll();
+
+        return "All user has been deleted.";
     }
 
     public Iterable<User> getAllUser(){
